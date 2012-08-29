@@ -1,0 +1,4 @@
+run qtconfig in CLI
+select interface tab
+select the default input method as ibus
+
