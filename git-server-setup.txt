@@ -1,0 +1,50 @@
+1. gitweb
+	https://wiki.archlinux.org/index.php/Gitweb
+	* pacman -S git apache highlight
+	* ln -s /usr/share/gitweb /srv/http/gitweb
+	* Add the following to the end of you /etc/httpd/conf/httpd.conf
+		<Directory "/srv/http/gitweb">
+			DirectoryIndex gitweb.cgi
+			Allow from all
+			AllowOverride all
+			Order allow,deny
+			Options ExecCGI
+			<Files gitweb.cgi>
+				SetHandler cgi-script
+			</Files>
+			SetEnv  GITWEB_CONFIG  /etc/conf.d/gitweb.conf
+		</Directory>
+	* /etc/conf.d/gitweb.conf
+		$git_temp = "/tmp";
+
+		# The directories where your projects are. Must not end with a slash.
+		$projectroot = "/path/to/your/repositories";
+
+		# Base URLs for links displayed in the web interface.
+		our @git_base_url_list = qw(git://<your_server> http://git@<your_server>);
+
+		# show the author of each line in a source file
+		$feature{'blame'}{'default'} = [1];
+
+		# highlight, need package 'highlight'
+		$feature{'highlight'}{'default'} = [1];
+	* start service httpd
+2 git-daemon
+	* pacman -S xinetd
+	* edit /etc/xinetd.d/git-daemon
+		# default: off
+		# description: The git server offers access to git repositories
+		service git-daemon
+		{
+			disable		= no
+			socket_type	= stream
+			wait		= no
+			user		= nobody
+			type		= UNLISTED
+			protocol	= tcp
+			log_on_failure	+= USERID
+			port	= 9418
+			server		= /usr/bin/git
+			server_args	= daemon --inetd --syslog --export-all --enable=upload-pack --enable=upload-archive --enable=receive-pack --base-path=/media/datum/server/repos
+		}
+	* start service 'xinetd'
