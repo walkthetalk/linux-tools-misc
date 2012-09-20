@@ -2,6 +2,8 @@
 	https://wiki.archlinux.org/index.php/Gitweb
 	* pacman -S git apache highlight
 	* ln -s /usr/share/gitweb /srv/http/gitweb
+	* change theme
+		https://github.com/kogakure/gitweb-theme
 	* Add the following to the end of you /etc/httpd/conf/httpd.conf
 		<Directory "/srv/http/gitweb">
 			DirectoryIndex gitweb.cgi
