@@ -1,0 +1,3 @@
+1. configure autoindex
+	/etc/httpd/conf/extra/httpd-autoindex.conf
+	IndexOptions FancyIndexing HTMLTable VersionSort Charset=UTF-8 DescriptionWidth=80 NameWidth=80
