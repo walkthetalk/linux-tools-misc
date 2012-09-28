@@ -1,0 +1,10 @@
+引用和指针（不能返回局部变量的引用）
+重载与explicit
+构造和析构（顺序，析构的virtual）
+成员初始化列表
+多态，虚函数，纯虚函数
+struct和class
+NULL和nullptr
+溢出和泄漏
+堆和栈
+new/delete vs. malloc/free
