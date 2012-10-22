@@ -10,3 +10,6 @@
 
 	git remote add origin https://github.com/walkthetalk/misc.git
 	git push -u origin master
+
+3. restore locally deleted files
+	git ls-files -d|xargs git checkout --
