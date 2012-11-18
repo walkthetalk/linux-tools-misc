@@ -182,8 +182,7 @@ flex-2.5.35.tar.bz2
 font-alias-1.0.3.tar.bz2
 font-util-1.3.0.tar.bz2
 fontcacheproto-0.1.3.tar.bz2
-fontconfig
-fontconfig-2.10.1.tar.gz
+fontconfig-2.9.0.tar.gz
 fontsproto-2.1.2.tar.bz2
 foomatic-filters-4.0.17.tar.gz
 freetype-2.4.10.tar.bz2
@@ -226,7 +225,7 @@ gnu-config-20120814.tar.bz2
 gnu-config-yocto-20111111.tgz
 gnu-efi_3.0m.orig.tar.gz
 gnupg-2.0.19.tar.bz2
-gnutls-2.12.21.tar.bz2
+gnutls-2.12.20.tar.bz2
 gobject-introspection-1.32.1.tar.xz
 gperf-3.0.4.tar.gz
 gpgme-1.3.2.tar.bz2
@@ -303,7 +302,7 @@ json-c-0.9.tar.gz
 json-glib-0.14.2.tar.bz2
 kbd-1.15.2.tar.bz2
 kbproto-1.0.6.tar.bz2
-kconfig-frontends-3.6.0-0.tar.xz
+kconfig-frontends-3.5.0-0.tar.xz
 kexec-tools-2.0.3.tar.gz
 kf-0.5.4.1.tar.gz
 lame-3.98.4.tar.gz
@@ -363,7 +362,7 @@ libdaemon-0.14.tar.gz
 libdmx-1.1.2.tar.bz2
 libdrm-2.4.39.tar.bz2
 libdrm-poulsbo_2.3.0-1ubuntu0sarvatt4~1004um1ubuntu1.tar.gz
-liberation-fonts-1.05.2.20091019.tar.gz
+liberation-fonts-1.04.tar.gz
 libetpan-0.54.tar.gz
 libevent-2.0.16-stable.tar.gz
 libexif-0.6.21.tar.bz2
@@ -417,7 +416,7 @@ libsexy-0.1.11.tar.gz
 libsndfile-1.0.25.tar.gz
 libsoup-2.38.1.tar.xz
 libsyncml-0.5.4.tar.bz2
-libtasn1-2.14.tar.gz
+libtasn1-2.13.tar.gz
 libtelepathy-0.3.3.tar.gz
 libtheora-1.1.1.tar.bz2
 libtirpc-0.2.2.tar.bz2
@@ -441,8 +440,8 @@ libxkbfile-1.0.8.tar.bz2
 libxkbui-1.0.2.tar.bz2
 libxklavier-3.9.tar.bz2
 libxml-perl-0.08.tar.gz
-libxml2-2.9.0.tar.gz
-libxslt-1.1.27.tar.gz
+libxml2-2.8.0.tar.gz
+libxslt-1.1.26.tar.gz
 lighttpd-1.4.31.tar.bz2
 linuxdoc-tools_0.9.66.tar.gz
 lndir-1.0.1.tar.gz
@@ -567,7 +566,7 @@ pcre-8.31.tar.bz2
 perl-5.14.2.tar.gz
 pigz-2.2.5.tar.gz
 pixman-0.27.2.tar.bz2
-pkg-config-0.26.tar.gz
+pkg-config-0.25.tar.gz
 pm-utils-1.4.1.tar.gz
 pm-utils-pm-utils-1.2.tar.gz
 pm_changes-r1.patch
@@ -658,7 +657,7 @@ socat-1.7.2.0.tar.bz2
 speex-1.2rc1.tar.gz
 spitzkbd_fix-r0.patch
 sqlite-3.7.3.tar.gz
-sqlite-autoconf-3071401.tar.gz
+sqlite-autoconf-3071300.tar.gz
 squashfs4.2.tar.gz
 sreadahead-0.02.tar.gz
 startup-notification-0.12.tar.gz
@@ -687,7 +686,7 @@ telepathy-python-0.15.19.tar.gz
 test-xvideo_svn.o-hand.com_.repos.misc.trunk_272_.tar.gz
 texi2html-5.0.tar.bz2
 texinfo-4.13a.tar.gz
-tiff-4.0.3.tar.gz
+tiff-4.0.2.tar.gz
 time-1.7.tar.gz
 tinylogin-1.4.tar.bz2
 tracker-0.7.18.tar.bz2
@@ -718,7 +717,7 @@ usb_pxa27x_udc-r6.patch
 usbutils-006.tar.gz
 userspace-rcu-0.7.3.tar.bz2
 ust-0.16.tar.gz
-util-linux-2.22.1.tar.bz2
+util-linux-2.21.2.tar.bz2
 util-linux-ng-2.17.2.tar.bz2
 util-macros-1.17.tar.gz
 uuid-1.6.2.tar.gz
@@ -744,7 +743,7 @@ xauth-1.0.7.tar.bz2
 xbacklight-1.1.tar.bz2
 xbiff-1.0.1.tar.bz2
 xbitmaps-1.0.1.tar.bz2
-xcb-proto-1.8.tar.bz2
+xcb-proto-1.7.1.tar.bz2
 xcb-util-0.3.9.tar.bz2
 xcb-util-image-0.3.9.tar.bz2
 xcb-util-keysyms-0.3.9.tar.bz2
@@ -838,7 +837,11 @@ zaurusd_svn.o-hand.com_.repos.misc.trunk_426_.tar.gz
 zeroconf-0.9.tar.gz
 zile-2.0beta6.tar.gz
 zip30.tgz
-zip232.tar.gz
-zlib-1.2.7-qat.L.0.4.0-011.tar.gz
-git2_git.yoctoproject.org.prelink-cross.git.tar.gz
+zlib-1.2.7.tar.bz2
+git2_git.gnome.org.gtk-doc-stub.tar.gz
+git2_git.gnome.org.mobile-broadband-provider-info.tar.gz
+git2_github.com.philb.update-rc.d.git.tar.gz
+git2_git.infradead.org.mtd-utils.git.tar.gz
 git2_git.profusion.mobi.kmod.git.tar.gz
+git2_git.yoctoproject.org.prelink-cross.git.tar.gz
+git2_git.yoctoproject.org.psplash.tar.gz
