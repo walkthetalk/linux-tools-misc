@@ -13,3 +13,8 @@
 
 3. restore locally deleted files
 	git ls-files -d|xargs git checkout --
+
+
+4. if you want mirror some repository:
+	git clone --mirror http://xx/yy.git
+
