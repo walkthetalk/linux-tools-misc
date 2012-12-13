@@ -2,26 +2,19 @@
 # autor: Ni Qingliang
 # NOTE: this script can be used to sync yocto repository which is accessed through
 #       http
-import sys
+#import sys
 import time
 import datetime
 import re
 import os
-import http.client
 import tempfile
 
 from bs4 import BeautifulSoup
 from subprocess import call
 import fileinput
 
-def my_print(fmt):
-#	print(fmt, end='')
-	sys.stdout.write(fmt)
-	sys.stdout.write("\n")
-	sys.stdout.flush()
-
 def g_download(rem_file, loc_dir):
-	call("wget -P " + loc_dir + " " + rem_file, shell=True)
+	call("wget --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
 class creg_file:
 	def __init__(self, parent, name, ts, size):
@@ -36,23 +29,18 @@ class creg_file:
 			stat_info = os.stat(file_path)
 #			dt_tmp = datetime.datetime.fromtimestamp(stat_info.st_mtime)
 #			my_print(" mtime is %s\n" % (dt_tmp.strftime("%d-%b-%Y %H:%M")))
-			if stat_info.st_mtime > time.mktime(datetime.datetime.strptime(timestamp, "%d-%b-%Y %H:%M")):
+			if stat_info.st_mtime > time.mktime(time.strptime(self._ts, "%d-%b-%Y %H:%M")):
 				return False
 		return True
 	def download(self):
 		if self.need_dl():
 			g_download(self._parent.main_page() + self._name, self._parent.loc_dir())
 		else:
-			my_print("%-50s skip\n" % (self._name) )
+			print("{:<50} skip".format(self._name))
 		return
-	def tostr(self):
-		return self._name + self._timestamp.strftime("%d-%b-%Y %H:%M") + self._size
 
 	def name(self):
 		return self._name
-
-	def rem_path(self):
-		return self._parent.main_page() + self._name
 
 class csub_rep:
 	def __init__(self, base_url, loc_dir):
@@ -62,7 +50,8 @@ class csub_rep:
 		self._fl_dl = {}
 		self._fl_ordered = []
 		self._loc_dir = loc_dir
-		# TODO: use wget
+		# get index
+		call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)
 		soup = BeautifulSoup(open("index.html"))
 		#print(soup.prettify())
 		prev_file = None
@@ -173,28 +162,22 @@ class csub_rep:
 	def rm_old_files(self):
 		cur_files = os.listdir(self._loc_dir)
 		set_cur = set()
-		#my_print("curfiles:")
 		for i in cur_files:
-			#my_print("  %s\n" % (i))
 			set_cur.add(i)
 		set_repo = set()
-		#my_print("\nrepofiles:")
 		for i in self._file_list:
-			#my_print("  %s\n" % (i.name()))
 			set_repo.add(i.name())
 
 		set_del = set_cur - set_repo
 		for i in set_del:
 			my_print("rming %s\n" % (self._loc_dir + i))
 			os.remove(self._loc_dir + i)
-		#my_print("\n")
 
 		return
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
 	loc_dir = './yoctoproject.source/'
-	#my_print("dling repo %s:\n" % (base_url))
 	test = csub_rep(base_url, loc_dir)
 	test.download()
 	#test.rm_old_files()
