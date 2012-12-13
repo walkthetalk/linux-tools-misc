@@ -1,27 +1,18 @@
 #!/usr/bin/env python
 # autor: Ni Qingliang
-# NOTE: this script can be used to sync arch repository which is accessed through
+# NOTE: this script can be used to sync yocto repository which is accessed through
 #       http
-
-import urllib.request, urllib.parse, urllib.error
 import sys
 import time
 import datetime
 import re
 import os
-import queue
-import threading
 import http.client
 import tempfile
 
 from bs4 import BeautifulSoup
-
-
-#g_host = "mirrors.ustc.edu.cn"
-g_host = "mirrors.163.com"
-g_loc_base_dir = "/mnt/datum/iso/yocto-sources/yoctoproject.source/"
-g_blk_size = 256 * 1024
-g_progress_bar_size = 25
+from subprocess import call
+import fileinput
 
 def my_print(fmt):
 #	print(fmt, end='')
@@ -29,227 +20,142 @@ def my_print(fmt):
 	sys.stdout.write("\n")
 	sys.stdout.flush()
 
-def report_hook(count, block_size, total_size, url, loc):
-	nb_total = int((total_size + block_size) / block_size)
-	if int(25 * count / nb_total) > int(25 * (count - 1) / nb_total):
-#		sys.stdout.write("#")
-		my_print("#")
-#		sys.stdout.write("%02d%%" %((100.0 * count / nb_total)))
-#	sys.stdout.write('%02d%% %010d %010d %010d %s %s' %((100.0 * count * block_size/ total_size), count, block_size, total_size, url, loc))
+def g_download(rem_file, loc_dir):
+	call("wget -P " + loc_dir + " " + rem_file, shell=True)
 
-#urllib.urlretrieve("http://sports.sina.com.cn/", reporthook= report_hook)
-
-def g_download(rem_file, loc_file):
-	file_name = os.path.basename(loc_file)
-	starttime =  datetime.datetime.now()
-#	print('download start time is %s'% starttime)
-#	urllib.request.urlretrieve(url,'test.html', reporthook= report_hook)  #开始下载，test.exe为下载后保存的文件名
-	my_print("%-50s[" % (file_name))
-
-	rem_fp = urllib.request.urlopen(rem_file)
-	headers = rem_fp.info()
-	real_size = -1
-	if "content-length" in headers:
-		real_size = int(headers["Content-Length"])
-	loc_fp = open(loc_file, 'wb')
-
-	read_size = 0
-	block_size = g_blk_size
-	real_block_num = int((real_size + block_size - 1) / block_size)
-	block_num = 0
-	prg_bar_total = g_progress_bar_size
-	prg_bar = 0
-	while 1:
-		block = rem_fp.read(block_size)
-		if not block:
-			break
-		read_size += len(block)
-		loc_fp.write(block)
-		block_num += 1
-		new_bar = int(prg_bar_total * block_num / real_block_num)
-		for i in range(new_bar - prg_bar):
-			my_print("-")
-		prg_bar = new_bar
-		time.sleep(0.5)
-	loc_fp.close()
-	rem_fp.close()
-#	urllib.request.urlretrieve(rem_file, loc_file, lambda nb, bs, fs, remote_file = rem_file, locale_file = loc_file:report_hook(nb, bs, fs, rem_file, loc_file))
-	endtime =  datetime.datetime.now()
-	my_print("]\n")
-#	print('download end time is %s'% endtime)
-#	print('you download the file use time %s s' % (endtime - starttime).seconds)
-
-class crep_block:
-	def __init__(self, nbr, size, rep_file):
-		self._block = None
-#		self._isDownloading = False
-		self._nbr = nbr
-		self._size = size
-		self._start = nbr * size
-		self._end = self._start + self._size - 1
-		self._rep_file = rep_file
-		return
-
-	def download(self, conn):
-		my_print("%2d" % (self._nbr))
-		headers = {
-			'Range':'bytes=%s-%s' % ( self._start, self._end )
-		};
-		conn.request('GET', self._rep_file.rem_path(), None, headers)
-		resp = conn.getresponse()
-		self._block = resp.read()
-
-		my_print("#")
-#		my_print(" %d %d\n" % (self._nbr, len(self._block)))
-		return
-
-	def correct(self, size):
-		self._end = size
-		self._size = self._end - self._start + 1
-		return
-
-class crep_file:
-	def __init__(self, name, timestamp, size, sub_rep):
+class creg_file:
+	def __init__(self, parent, name, ts, size):
+		self._parent = parent
 		self._name = name
-#		self._timestamp = datetime.datetime.strptime(timestamp, "%d-%b-%Y %H:%M")
-		self._timestamp = time.strptime(timestamp, "%d-%b-%Y %H:%M")
-		self._size = int(size)
-		self._blk_size = g_blk_size
-		self._nBlk = int((self._size + self._blk_size - 1) / self._blk_size)
-		self._sub_rep = sub_rep
-#		my_print("block num: %d\n" %(nblock))
-		self._blocks = []
-		self._blocks_null = []
-		self._blocks_dling = []
+		self._ts = ts
+		self._size = size
 
 	def need_dl(self):
-		file_path = self._sub_rep.loc_dir() + self._name
-		if os.path.exists(file_path) and (os.path.getsize(file_path) == self._size):
+		file_path = self._parent.loc_dir() + self._name
+		if os.path.exists(file_path):# and (os.path.getsize(file_path) == self._size):
 			stat_info = os.stat(file_path)
 #			dt_tmp = datetime.datetime.fromtimestamp(stat_info.st_mtime)
 #			my_print(" mtime is %s\n" % (dt_tmp.strftime("%d-%b-%Y %H:%M")))
-			if stat_info.st_mtime > time.mktime(self._timestamp):
+			if stat_info.st_mtime > time.mktime(datetime.datetime.strptime(timestamp, "%d-%b-%Y %H:%M")):
 				return False
 		return True
 	def download(self):
 		if self.need_dl():
-			g_download("http://" + g_host + self._sub_rep.main_page() + self._name, self._sub_rep.loc_dir() + self._name)
+			g_download(self._parent.main_page() + self._name, self._parent.loc_dir())
 		else:
 			my_print("%-50s skip\n" % (self._name) )
 		return
-
-	def _gen_blks(self, queue):
-		# donot need to download files
-		file_path = self._sub_rep.loc_dir() + self._name
-		if os.path.exists(file_path) and (os.path.getsize(file_path) == self._size):
-			return
-
-		# block		
-		for index in range(self._nBlk):
-			blk_info_tmp = crep_block(index, self._blk_size, self)
-			self._blocks.append(blk_info_tmp)
-			self._blocks_null.append(blk_info_tmp)
-			queue.put(blk_info_tmp)
-
-		self._blocks[self._nBlk - 1].correct(self._size)
-
-		return
-	def write_to_file(self):
-		file_path = self._sub_rep._loc_dir + self._name
-		if len(self._blocks) == 0:
-			return
-
-		fp = open(file_path, "wb")
-		for i in self._blocks:
-			fp.write(i._block)
-		fp.close()
-
 	def tostr(self):
-		return self._name + self._timestamp.strftime("%d-%b-%Y %H:%M") + str(self._size)
+		return self._name + self._timestamp.strftime("%d-%b-%Y %H:%M") + self._size
 
 	def name(self):
 		return self._name
 
 	def rem_path(self):
-		return self._sub_rep.main_page() + self._name
-
-	def blk_num(self):
-		return self._nBlk
-
-	def size(self):
-		return self._size
-
+		return self._parent.main_page() + self._name
 
 class csub_rep:
 	def __init__(self, base_url, loc_dir):
 		self._main_page = base_url
-		self._file_list = []
+		self._fl_non_regular = {}
+		self._fl_regular = {}
+		self._fl_dl = {}
+		self._fl_ordered = []
 		self._loc_dir = loc_dir
-		my_print("open")
-		# use wget
+		# TODO: use wget
 		soup = BeautifulSoup(open("index.html"))
 		#print(soup.prettify())
-		tr = soup.table.tr
-		#tr = tr.find_next("tr")
-		#tr = tr.find_next("tr")	# the third `tr' is file
-		while tr:
+		prev_file = None
+		prev_pkg_name = ""
+		prev_pkg_ver = ""
+		for tr in soup.table.find_all("tr", recursive=False):
+			# skip header
 			if tr.th:
-				tr = tr.find_next("tr")
 				continue
 			# img
 			td = tr.td
 			if td.img["alt"] == "[DIR]":
-				tr = tr.find_next("tr")
 				continue
 			# a
-			td = td.find_next("td")
+			td = td.find_next_sibling("td")
 			file_name = td.a["href"].strip()
 			if re.match(".*\.done$", file_name):
-				tr = tr.find_next("tr")
 				continue
 			# timestamp
-			td = td.find_next("td")
+			td = td.find_next_sibling("td")
 			file_ts = td.string.strip()
 			# size
-			td = td.find_next("td")
+			td = td.find_next_sibling("td")
 			file_size = td.string.strip()
 			if file_size == "0":
-				tr = tr.find_next("tr")
-				continue
-			print(file_name)
-			print(file_size)
-			break
-
-			tr = tr.find_next("tr")
-		return
-		for line in fp:
-			my_print(str(line))
-			break
-			str_line = str(line)
-			#过滤无用行
-			if not re.match("^b\'\<a", str_line):
-				continue
-			str_arr = re.split('b\'\<a href=\"|\"\>|\</a\> +|  +|\\\\r\\\\n\'', str_line)
-
-			if str_arr[4] == "-":
-				continue
-			# fix 163's bug
-			if int(str_arr[4]) < 100:
 				continue
 
-			#my_print("  add %s\n" % (str_arr[2]))
-			#如果链接以./开头，则去除
-			str_arr[1] = re.sub("^\./", "", str_arr[1])
-			self._file_list.append(crep_file(str_arr[1], str_arr[3], str_arr[4], self))
+			# parse
+			self._fl_ordered.append(file_name)
+			if re.match(r"^.*"
+				"(_\.svn|\.trunk|svn\.)"
+				".*$", file_name):
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				continue;
+			if re.match(r"^git[2]?_.*$", file_name):
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				continue;
+			if re.match(r"^.*\.patch$", file_name):
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				continue;
+			m = re.match(r"^(?P<pkgname>.*)"
+				"(-|_|-s|\.v)"
+				"(?P<pkgver>(([0-9]+\.)+[0-9]+)|(([0-9]+_)+[0-9]+))"
+				"(?P<stage>-P[0-9]+|p[0-9]+|[a-z]|alpha|-?beta[0-9]*|-?rc[0-9]+|-pre[0-9]+)?"
+				"(?P<revision>-[0-9]+)?"
+				"\."
+				"(?P<ext>tar\.bz2|tar\.gz|tar\.xz|tgz|zip|gz|bz2)"
+				"$", file_name)
+			if not m:
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				continue
 
-		fp.close()
+			# regular file
+			self._fl_regular[file_name] = None
+			pkgname = m.group("pkgname")
+			pkgver = m.group("pkgver")
+			if pkgname != prev_pkg_name: # different pkg
+				if prev_file:
+					self._fl_regular[prev_file.name()] = prev_file
+				# update prev
+				prev_pkg_name = pkgname
+				prev_pkg_ver = pkgver
+				prev_file = creg_file(self, file_name, file_ts, file_size)
+				
+			else: # same pkg
+				if prev_pkg_ver.startswith(pkgver) and prev_pkg_ver != pkgver:
+					None
+				else: # update prev
+					prev_pkg_ver = pkgver
+					prev_file = creg_file(self, file_name, file_ts, file_size)
+		# the final one
+		if prev_file:
+			self._fl_regular[prev_file.name()] = prev_file
+		# remove files non't need dl in non-regular list
+		with fileinput.input(files=("yocto-nrfl-with-flag.lst")) as f:
+			for line in f:
+				m = re.match(r"^#(?P<file_name>.*)$", line)
+				if m:
+					self._fl_non_regular[m.group("file_name")] = None
+		# generate download list
+		for (k, v) in self._fl_non_regular.items():
+			if v:
+				self._fl_dl[k] = v
+		for (k, v) in self._fl_regular.items():
+			if v:
+				self._fl_dl[k] = v
+		# generate new non-regular-with-flag.lst
+		#for (k, v) in self._fl_non_regular.items():
+		#	print("{}{}".format("" if v else "#", k))
 
 		# create locale directory
 		if not os.path.exists(self._loc_dir):
 			os.makedirs(self._loc_dir)
-#		for single_file in self._file_list:
-#			print(single_file.tostr())
-
 	def main_page(self):
 		return self._main_page
 
@@ -257,8 +163,10 @@ class csub_rep:
 		return self._loc_dir
 
 	def download(self):
-		for i in self._file_list:
-			i.download()
+		#for k in self._fl_ordered:
+		#	print("{}{}".format("" if k in self._fl_dl else "#", k))
+		for (k, v) in self._fl_dl.items():
+			v.download()
 
 		return
 
@@ -285,10 +193,10 @@ class csub_rep:
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
-	loc_dir = '/mnt/datum/iso/yocto-sources/yoctoproject.source/'
-	my_print("dling repo %s:\n" % (base_url))
+	loc_dir = './yoctoproject.source/'
+	#my_print("dling repo %s:\n" % (base_url))
 	test = csub_rep(base_url, loc_dir)
-	#test.download()
+	test.download()
 	#test.rm_old_files()
 #	prc_file("test.html")
 #	download('http://mirrors.163.com/archlinux/core/os/x86_64/', 'test.html')
