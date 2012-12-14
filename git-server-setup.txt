@@ -32,21 +32,38 @@
 		$feature{'highlight'}{'default'} = [1];
 	* start service httpd
 2 git-daemon
-	* pacman -S xinetd
-	* edit /etc/xinetd.d/git-daemon
-		# default: off
-		# description: The git server offers access to git repositories
-		service git-daemon
-		{
-			disable		= no
-			socket_type	= stream
-			wait		= no
-			user		= nobody
-			type		= UNLISTED
-			protocol	= tcp
-			log_on_failure	+= USERID
-			port	= 9418
-			server		= /usr/bin/git
-			server_args	= daemon --inetd --syslog --export-all --enable=upload-pack --enable=upload-archive --enable=receive-pack --base-path=/media/datum/server/repos
-		}
-	* start service 'xinetd'
+	2.1 systemd
+		* edit /usr/lib/systemd/system/git-daemon\@.service
+			[Unit]
+			Description=Git Daemon Instance
+
+			[Service]
+			User=git
+			# The '-' is to ignore non-zero exit statuses
+			ExecStart=-/usr/lib/git-core/git-daemon --inetd --export-all --enable=upload-pack --enable=upload-archive --enable=receive-pack --base-path=/srv/git
+			StandardInput=socket
+			StandardOutput=inherit
+			StandardError=journal
+		* enable and start 'git-daemon.socket'
+			systemctl enable git-daemon.socket
+			systemctl start git-daemon.socket
+	2.2 xinetd
+		* pacman -S xinetd
+		* edit /etc/xinetd.d/git-daemon
+			# default: off
+			# description: The git server offers access to git repositories
+			service git-daemon
+			{
+				disable		= no
+				socket_type	= stream
+				wait		= no
+				user		= nobody
+				type		= UNLISTED
+				protocol	= tcp
+				log_on_failure	+= USERID
+				port	= 9418
+				server		= /usr/bin/git
+				server_args	= daemon --inetd --syslog --export-all --enable=upload-pack --enable=upload-archive --enable=receive-pack --base-path=/media/datum/server/repos
+			}
+		* start service 'xinetd'
+			rc.d start xinetd
