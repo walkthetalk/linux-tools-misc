@@ -115,7 +115,7 @@ class csub_rep:
 				prev_pkg_name = pkgname
 				prev_pkg_ver = pkgver
 				prev_file = creg_file(self, file_name, file_ts, file_size)
-				
+
 			else: # same pkg
 				if prev_pkg_ver.startswith(pkgver) and prev_pkg_ver != pkgver:
 					None
@@ -139,8 +139,11 @@ class csub_rep:
 			if v:
 				self._fl_dl[k] = v
 		# generate new non-regular-with-flag.lst
-		#for (k, v) in self._fl_non_regular.items():
-		#	print("{}{}".format("" if v else "#", k))
+		if 0:
+			for k in self._fl_ordered:
+				if k not in self._fl_non_regular:
+					continue
+				print("{}{}".format("" if self._fl_non_regular[k] else "#", k))
 
 		# create locale directory
 		if not os.path.exists(self._loc_dir):
@@ -177,10 +180,11 @@ class csub_rep:
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
-	loc_dir = './yoctoproject.source/'
+	loc_dir = './sources.yoctoproject/'
 	test = csub_rep(base_url, loc_dir)
 	test.download()
 	#test.rm_old_files()
+	call("find sources.yoctoproject sources.custom -type f -exec ln -s ../{} ./sources/ \;")
 #	prc_file("test.html")
 #	download('http://mirrors.163.com/archlinux/core/os/x86_64/', 'test.html')
 #	file_time = datetime.datetime.strptime("14-Feb-2011 22:00", "%d-%b-%Y %H:%M")

@@ -48,6 +48,7 @@ acl-2.2.51.src.tar.gz
 add-dom-functions.patch
 add-end-element-signal.patch
 agent_dev.eclipse.org_.svnroot.dsdp.org.eclipse.tm.tcf.trunk_1855_.tar.gz
+amd-gpu-x11-bin-mx51-11.09.01.bin
 apmd_3.2.2-14.diff.gz
 apmd_3.2.2.orig.tar.gz
 apps.update-rc.d_anoncvs.handhelds.org_r0_7_.tar.gz
@@ -142,7 +143,8 @@ config-3155524.tar.gz
 config_cvs.sv.gnu.org__20080123.tar.gz
 css-media.patch
 css-stylesheet-user.patch
-cups-1.4.6-source.tar.bz2
+#cups-1.4.6-source.tar.bz2
+cups-1.6.1-source.tar.bz2
 #cwautomacros-20090610.tar.bz2
 cwautomacros-20110201.tar.bz2
 #dbus-wait_svn.o-hand.com_.repos.misc.trunk_402_.tar.gz
@@ -175,6 +177,7 @@ export_atags-r0a.patch
 fakechroot_2.9-1.1.diff.gz
 fakechroot_2.9.orig.tar.gz
 fakeroot_1.14.4.orig.tar.bz2
+firmware-imx-11.09.01.bin
 #flex-2.5.31.tar.bz2.1
 #flex-2.5.31.tar.bz2.2
 fontconfig
@@ -208,6 +211,7 @@ git2_git.denx.de.u-boot.git.tar.gz
 git2_git.eclipse.org.gitroot.tcf.org.eclipse.tcf.agent.git.tar.gz
 git2_git.efficios.com.babeltrace.git.tar.gz
 git2_git.fedorahosted.org.git.newt.tar.gz
+#git2_git.freescale.com.imx.linux-2.6-imx.git.tar.gz
 git2_git.freescale.com.ppc.sdk.boot-format.git.tar.gz
 #git2_git.freescale.com.ppc.sdk.linux.git.tar.gz
 #git2_git.freescale.com.ppc.sdk.u-boot.git.tar.gz
@@ -303,6 +307,7 @@ git2_git.yoctoproject.org.web-webkit.tar.gz
 git2_git.yoctoproject.org.xsettings-daemon.tar.gz
 git2_git.yoctoproject.org.yocto-kernel-tools.git.tar.gz
 git2_git.yoctoproject.org.zaurusd.tar.gz
+#git2_github.com.Freescale.u-boot-imx.git.tar.gz
 git2_github.com.clrkwllms.rt-tests.git.tar.gz
 git2_github.com.connectivity.connman-gnome.git.tar.gz
 #git2_github.com.hjl-tools.glibc.git.tar.gz
@@ -323,6 +328,7 @@ git2_gitorious.org.x-loader.x-loader.git.tar.gz
 git2_meego.gitorious.org.meego-os-base.gconf-dbus.git.tar.gz
 git2_review.coreboot.org.p.coreboot.tar.gz
 git2_sources.redhat.com.git.systemtap.git.tar.gz
+git2_sourceware.org.git.systemtap.git.tar.gz
 git2_www.jdl.com.software.dtc.git.tar.gz
 #git_anongit.freedesktop.org.git.ccss.git.tar.gz
 #git_anongit.freedesktop.org.git.ccss.git_62697eb84fe190f9b8c65fcbaae10ec3d9edfffd.tar.gz
@@ -524,7 +530,8 @@ hx2750_pcmcia-r3.patch
 hx2750_test1-r7.patch
 hx2750_test1-r8.patch
 iain-mem-leak.patch
-icu4c-3_6-src.tgz
+#icu4c-3_6-src.tgz
+icu4c-50_1-src.tgz
 input_power-r7.patch
 input_power-r9.patch
 integrator_rgb-r1.patch
@@ -542,7 +549,8 @@ jpegsrc.v8d.tar.gz
 #less-443.tar.gz
 #less-444.tar.gz
 #less-451.tar.gz
-less-456.tar.gz
+#less-456.tar.gz
+less-457.tar.gz
 #libaio_0.3.107.orig.tar.gz
 libaio_0.3.109.orig.tar.gz
 libarchive-2.8.4.yocto.1.tar.gz
@@ -562,6 +570,7 @@ libtirpc-glibc-nfs.tar.xz
 #libva_0.31.0-1+sds9.1ubuntu1.tar.gz
 libwsbm-cdv-1.1.0-3.1.i586.rpm
 libwsbm-cdv-devel-1.1.0-3.1.i586.rpm
+libz160-bin-11.09.01.bin
 locomo_kbd_tweak-r1.patch
 locomo_kbd_tweak-r2.patch
 locomo_led_fix-r0.patch
@@ -688,7 +697,8 @@ spitzkbd_fix-r0.patch
 #sqlite-autoconf-3071000.tar.gz
 #sqlite-autoconf-3071100.tar.gz
 #sqlite-autoconf-3071300.tar.gz
-sqlite-autoconf-3071401.tar.gz
+#sqlite-autoconf-3071401.tar.gz
+sqlite-autoconf-3071500.tar.gz
 squashfs4.2.tar.gz
 sudo-1.6.8p12.patch.gz
 sysvinit-2.88dsf.tar.bz2
