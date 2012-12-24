@@ -85,13 +85,13 @@ class csub_rep:
 				"(_\.svn|\.trunk|svn\.)"
 				".*$", file_name):
 				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
-				continue;
+				continue
 			if re.match(r"^git[2]?_.*$", file_name):
 				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
-				continue;
+				continue
 			if re.match(r"^.*\.patch$", file_name):
 				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
-				continue;
+				continue
 			m = re.match(r"^(?P<pkgname>.*)"
 				"(-|_|-s|\.v)"
 				"(?P<pkgver>(([0-9]+\.)+[0-9]+)|(([0-9]+_)+[0-9]+))"
@@ -184,7 +184,7 @@ if __name__ == '__main__':
 	test = csub_rep(base_url, loc_dir)
 	test.download()
 	#test.rm_old_files()
-	call("find sources.yoctoproject sources.custom -type f -exec ln -s ../{} ./sources/ ;")
+	call("find sources.yoctoproject sources.custom -type f -exec ln -sf ../{} ./sources/ ;")
 #	prc_file("test.html")
 #	download('http://mirrors.163.com/archlinux/core/os/x86_64/', 'test.html')
 #	file_time = datetime.datetime.strptime("14-Feb-2011 22:00", "%d-%b-%Y %H:%M")
