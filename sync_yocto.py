@@ -10,7 +10,6 @@ import os
 import tempfile
 
 from bs4 import BeautifulSoup
-from subprocess import call
 import fileinput
 
 def g_download(rem_file, loc_dir):
@@ -184,7 +183,7 @@ if __name__ == '__main__':
 	test = csub_rep(base_url, loc_dir)
 	test.download()
 	#test.rm_old_files()
-	call("find sources.yoctoproject sources.custom -type f -exec ln -sf ../{} ./sources/ ;")
+	os.system("find sources.yoctoproject/ sources.custom/ -type f -exec ln -sf ../{} ./sources/ \\;")
 #	prc_file("test.html")
 #	download('http://mirrors.163.com/archlinux/core/os/x86_64/', 'test.html')
 #	file_time = datetime.datetime.strptime("14-Feb-2011 22:00", "%d-%b-%Y %H:%M")
