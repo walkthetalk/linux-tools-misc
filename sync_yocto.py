@@ -2,7 +2,6 @@
 # autor: Ni Qingliang
 # NOTE: this script can be used to sync yocto repository which is accessed through
 #       http
-#import sys
 import time
 import datetime
 import re
@@ -13,8 +12,9 @@ from bs4 import BeautifulSoup
 from subprocess import call
 import fileinput
 
+# the `-N' option can make wget overwrite the old file
 def g_download(rem_file, loc_dir):
-	call("wget --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
+	call("wget -N --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
 class creg_file:
 	def __init__(self, parent, name, ts, size):
@@ -51,7 +51,7 @@ class csub_rep:
 		self._fl_ordered = []
 		self._loc_dir = loc_dir
 		# get index
-		call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)
+		call("wget -N --progress=bar -O " + "index.html" + " " + base_url, shell=True)
 		soup = BeautifulSoup(open("index.html"))
 		#print(soup.prettify())
 		prev_file = None
@@ -139,11 +139,12 @@ class csub_rep:
 			if v:
 				self._fl_dl[k] = v
 		# generate new non-regular-with-flag.lst
-		if 0:
+		with open("yocto-nrfl-with-flag.lst.new", 'w') as f:
 			for k in self._fl_ordered:
 				if k not in self._fl_non_regular:
 					continue
-				print("{}{}".format("" if self._fl_non_regular[k] else "#", k))
+				f.write("{}{}".format("" if self._fl_non_regular[k] else "#", k))
+				f.write("\n")
 
 		# create locale directory
 		if not os.path.exists(self._loc_dir):
@@ -168,12 +169,12 @@ class csub_rep:
 		for i in cur_files:
 			set_cur.add(i)
 		set_repo = set()
-		for i in self._file_list:
-			set_repo.add(i.name())
+		for (k, v) in self._fl_dl.items():
+			set_repo.add(v.name())
 
 		set_del = set_cur - set_repo
 		for i in set_del:
-			my_print("rming %s\n" % (self._loc_dir + i))
+			print("rming {}".format(i))
 			os.remove(self._loc_dir + i)
 
 		return
@@ -183,7 +184,7 @@ if __name__ == '__main__':
 	loc_dir = './sources.yoctoproject/'
 	test = csub_rep(base_url, loc_dir)
 	test.download()
-	#test.rm_old_files()
+	test.rm_old_files()
 	call("find sources.yoctoproject/ sources.custom/ -type f -exec ln -sf ../{} ./sources/ \\;", shell=True)
 #	prc_file("test.html")
 #	download('http://mirrors.163.com/archlinux/core/os/x86_64/', 'test.html')
