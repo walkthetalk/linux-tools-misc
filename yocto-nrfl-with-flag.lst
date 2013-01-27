@@ -234,7 +234,7 @@ git2_git.infradead.org.mtd-utils.git.tar.gz
 git2_git.kernel.dk.blktrace.git.tar.gz
 git2_git.kernel.org.pub.scm.bluetooth.libgdbus.git.tar.gz
 git2_git.kernel.org.pub.scm.boot.efilinux.efilinux.git.tar.gz
-git2_git.kernel.org.pub.scm.linux.kernel.git.clrkwllms.rt-tests.git.tar.gz
+#git2_git.kernel.org.pub.scm.linux.kernel.git.clrkwllms.rt-tests.git.tar.gz
 #git2_git.kernel.org.pub.scm.linux.kernel.git.dwmw2.linux-firmware.git.tar.gz
 git2_git.kernel.org.pub.scm.linux.kernel.git.firmware.linux-firmware.git.tar.gz
 git2_git.kernel.org.pub.scm.linux.kernel.git.mason.btrfs-progs-unstable.git.tar.gz
@@ -312,7 +312,7 @@ git2_git.yoctoproject.org.xsettings-daemon.tar.gz
 git2_git.yoctoproject.org.yocto-kernel-tools.git.tar.gz
 git2_git.yoctoproject.org.zaurusd.tar.gz
 #git2_github.com.Freescale.u-boot-imx.git.tar.gz
-git2_github.com.clrkwllms.rt-tests.git.tar.gz
+#git2_github.com.clrkwllms.rt-tests.git.tar.gz
 git2_github.com.connectivity.connman-gnome.git.tar.gz
 #git2_github.com.hjl-tools.glibc.git.tar.gz
 #git2_github.com.hjl-tools.linux.git.tar.gz
