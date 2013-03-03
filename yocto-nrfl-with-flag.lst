@@ -123,6 +123,7 @@ bash42-010
 bdwgc-7_2alpha5-20110107.tar.bz2
 bickley-0.4_20091124.tar.bz2
 #big_buck_bunny_720p_stereo.ogg
+blktool_4-6.1.diff.gz
 blktool_4-6.diff.gz
 blktool_4.orig.tar.gz
 bognor-regis-0.5.0_20091116.tar.bz2
@@ -160,7 +161,8 @@ diffstat_1.47.orig.tar.gz
 docbk41.zip
 #dosfstools-2.10.src.tar.gz
 dosfstools-2.11.src.tar.gz
-eglibc-2.16-svnr21224.tar.bz2
+#eglibc-2.16-svnr21224.tar.bz2
+eglibc-2.17-svnr22064.tar.bz2
 #eglibc-2_12_svn.eglibc.org_.branches_10809_.tar.gz
 #eglibc-2_12_www.eglibc.org_.svn.branches._10809_.tar.gz
 #eglibc-2_12_www.eglibc.org_.svn.branches._11982_.tar.gz
@@ -179,6 +181,7 @@ export_atags-r0a.patch
 fakechroot_2.9-1.1.diff.gz
 fakechroot_2.9.orig.tar.gz
 fakeroot_1.14.4.orig.tar.bz2
+firmware-imx-1.1.0.bin
 #firmware-imx-11.09.01.bin
 firmware-imx-12.09.01.bin
 #flex-2.5.31.tar.bz2.1
@@ -285,6 +288,7 @@ git2_git.yoctoproject.org.libowl.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.2.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.4.git.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.4.tar.gz
+#git2_git.yoctoproject.org.linux-yocto-3.8.git.tar.gz
 git2_git.yoctoproject.org.matchbox-config-gtk.tar.gz
 git2_git.yoctoproject.org.matchbox-desktop-2.tar.gz
 git2_git.yoctoproject.org.matchbox-desktop-sato.tar.gz
@@ -301,6 +305,7 @@ git2_git.yoctoproject.org.oprofileui.tar.gz
 git2_git.yoctoproject.org.owl-video.tar.gz
 #git2_git.yoctoproject.org.poky.tar.gz
 git2_git.yoctoproject.org.prelink-cross.git.tar.gz
+git2_git.yoctoproject.org.pseudo.tar.gz
 git2_git.yoctoproject.org.psplash.tar.gz
 git2_git.yoctoproject.org.qemugl.tar.gz
 git2_git.yoctoproject.org.screenshot.tar.gz
@@ -539,7 +544,8 @@ heirloom-mailx_12.5.orig.tar.gz
 iain-mem-leak.patch
 #icu4c-3_6-src.tgz
 #icu4c-50_1-src.tgz
-icu4c-50_1_1-src.tgz
+#icu4c-50_1_1-src.tgz
+icu4c-50_1_2-src.tgz
 input_power-r7.patch
 input_power-r9.patch
 integrator_rgb-r1.patch
@@ -565,8 +571,9 @@ libarchive-2.8.4.yocto.1.tar.gz
 libcap2_2.22.orig.tar.gz
 libcrypto-openssl-1.0.1-qat.L.0.4.0-012.tar.gz
 libdrm-poulsbo_2.3.0-1ubuntu0sarvatt4~1004um1ubuntu1.tar.gz
-libevent-1.4.14b-stable.tar.gz
-libevent-2.0.16-stable.tar.gz
+#libevent-1.4.14b-stable.tar.gz
+#libevent-2.0.16-stable.tar.gz
+libevent-2.0.21-stable.tar.gz
 libfakekey_svn.o-hand.com_.repos.matchbox.trunk_2031_.tar.gz
 #libowl-av_svn.o-hand.com_.repos.misc.trunk_398_.tar.gz
 libowl-av_svn.o-hand.com_.repos.misc.trunk_416_.tar.gz
@@ -622,6 +629,7 @@ mkelfImage_coreboot.org_.coreboot.trunk.util_6637_.tar.gz
 #ncurses-5.7-20100424-patch.sh.bz2
 #ncurses-5.7-20100501.patch.gz
 net-tools_1.60-23.diff.gz
+net-tools_1.60-24.2.diff.gz
 net-tools_1.60.orig.tar.gz
 #ocf-linux-20100325.tar.gz
 ocf-linux-20120127.tar.gz
@@ -709,7 +717,8 @@ spitzkbd_fix-r0.patch
 #sqlite-autoconf-3071300.tar.gz
 #sqlite-autoconf-3071401.tar.gz
 #sqlite-autoconf-3071500.tar.gz
-sqlite-autoconf-3071501.tar.gz
+#sqlite-autoconf-3071501.tar.gz
+sqlite-autoconf-3071502.tar.gz
 squashfs4.2.tar.gz
 sudo-1.6.8p12.patch.gz
 systemd-196.tar.xz
@@ -750,6 +759,7 @@ trunk_ubootchart.googlecode.com_.svn._12_.tar.gz
 #tzcode2009r.tar.gz
 #tzcode2011g.tar.gz
 #tzcode2011i.tar.gz
+tzcode2012j.tar.gz
 #tzdata2009s.tar.gz
 #tzdata2010j.tar.gz
 #tzdata2010o.tar.gz
@@ -761,7 +771,8 @@ trunk_ubootchart.googlecode.com_.svn._12_.tar.gz
 #tzdata2011n.tar.gz
 #tzdata2012b.tar.gz
 #tzdata2012c.tar.gz
-tzdata2012d.tar.gz
+#tzdata2012d.tar.gz
+tzdata2012j.tar.gz
 #udev-124.tar.gz
 #udev-141.tar.gz
 #udev-158.tar.gz
