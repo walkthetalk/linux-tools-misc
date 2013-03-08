@@ -33,17 +33,19 @@
 	* start service httpd
 2 git-daemon
 	2.1 systemd
-		* edit /usr/lib/systemd/system/git-daemon\@.service
-			[Unit]
-			Description=Git Daemon Instance
-
-			[Service]
-			User=git
-			# The '-' is to ignore non-zero exit statuses
+		* first alternative: edit /usr/lib/systemd/system/git-daemon\@.service
+			...
 			ExecStart=-/usr/lib/git-core/git-daemon --inetd --export-all --enable=upload-pack --enable=upload-archive --enable=receive-pack --base-path=/srv/git
-			StandardInput=socket
-			StandardOutput=inherit
-			StandardError=journal
+			...
+		* second alternative: config \em every repository
+			add following lines to /srv/git/xxx.git/config:
+				[gitweb]
+				        owner = Yi Qingliang
+				[daemon]
+				        uploadpack = true
+				        uploadarch = true
+				        receivepack = true
+			and then `touch git-daemon-export-ok"
 		* enable and start 'git-daemon.socket'
 			systemctl enable git-daemon.socket
 			systemctl start git-daemon.socket
