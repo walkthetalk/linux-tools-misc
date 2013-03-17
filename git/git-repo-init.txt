@@ -18,3 +18,6 @@
 4. if you want mirror some repository:
 	git clone --mirror http://xx/yy.git
 
+5. export subdirectory:
+	git filter-branch --subdirectory-filter <subdir> -- --all
+

@@ -184,5 +184,5 @@ if __name__ == '__main__':
 	loc_dir = './sources.yoctoproject/'
 	test = csub_rep(base_url, loc_dir)
 	test.download()
-	test.rm_old_files()
+	#test.rm_old_files()
 	call("rm ./sources/*; find sources.yoctoproject/ sources.custom/ -type f -exec ln -sf ../{} ./sources/ \\;", shell=True)
