@@ -21,3 +21,5 @@
 5. export subdirectory:
 	git filter-branch --subdirectory-filter <subdir> -- --all
 
+6. delete subdirectory:
+	git filter-branch -f --tree-filter "rm -rf <subdir>" --prune-empty HEAD
