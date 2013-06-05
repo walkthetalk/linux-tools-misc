@@ -53,6 +53,7 @@ amd-gpu-x11-bin-mx51-11.09.01.bin
 apmd_3.2.2-14.diff.gz
 apmd_3.2.2.orig.tar.gz
 #apps.update-rc.d_anoncvs.handhelds.org_r0_7_.tar.gz
+apt_0.9.8.1.tar.gz_bad-checksum_85781bb39901d6fb79c37ca307929594
 #arm-2005q3-2-arm-none-eabi.src.tar.bz2
 at-import_box-pos.patch
 #at_3.1.12.orig.tar.gz
@@ -135,7 +136,8 @@ bognor-regis-0.5.0_20091116.tar.bz2
 #byacc-20111219.tgz
 #byacc-20120115.tgz
 #byacc-20120526.tgz
-byacc-20121003.tgz
+#byacc-20121003.tgz
+byacc-20130304.tgz
 calgary.tar.gz
 cantrbry.tar.gz
 chrpath_0.13.orig.tar.gz
@@ -181,9 +183,10 @@ export_atags-r0a.patch
 fakechroot_2.9-1.1.diff.gz
 fakechroot_2.9.orig.tar.gz
 fakeroot_1.14.4.orig.tar.bz2
-firmware-imx-1.1.0.bin
+#firmware-imx-1.1.0.bin
+#firmware-imx-3.0.35-4.0.0.bin
 #firmware-imx-11.09.01.bin
-firmware-imx-12.09.01.bin
+#firmware-imx-12.09.01.bin
 #flex-2.5.31.tar.bz2.1
 #flex-2.5.31.tar.bz2.2
 fontconfig
@@ -214,6 +217,7 @@ git2_git.clutter-project.org.clutter-gst.git.tar.gz
 git2_git.clutter-project.org.clutter-gtk.git.tar.gz
 git2_git.clutter-project.org.clutter.git.tar.gz
 git2_git.debian.org.git.debian-eeepc.eeepc-acpi-scripts.git.tar.gz
+git2_git.denx.de.mxsldr.git.tar.gz
 git2_git.denx.de.u-boot.git.tar.gz
 git2_git.eclipse.org.gitroot.tcf.org.eclipse.tcf.agent.git.tar.gz
 git2_git.efficios.com.babeltrace.git.tar.gz
@@ -246,6 +250,7 @@ git2_git.kernel.org.pub.scm.linux.kernel.git.rostedt.trace-cmd.git.tar.gz
 git2_git.kernel.org.pub.scm.linux.kernel.git.shemminger.iproute2.git.tar.gz
 git2_git.kernel.org.pub.scm.network.connman.connman-gnome.git.tar.gz
 git2_git.kernel.org.pub.scm.network.connman.connman.git.tar.gz
+git2_git.kernel.org.pub.scm.network.nfc.neard.git.tar.gz
 git2_git.kernel.org.pub.scm.utils.kernel.kmod.kmod.git.tar.gz
 git2_git.lttng.org.lttng-modules.git.tar.gz
 git2_git.lttng.org.lttng-tools.git.tar.gz
@@ -272,6 +277,7 @@ git2_git.pokylinux.org.swabber.tar.gz
 git2_git.pokylinux.org.xsettings-daemon.tar.gz
 git2_git.pokylinux.org.yocto-kernel-tools.git.tar.gz
 #git2_git.profusion.mobi.kmod.git.tar.gz
+git2_git.qemu.org.qemu.git.tar.gz
 git2_git.yoctoproject.org.dbus-wait.tar.gz
 git2_git.yoctoproject.org.fstests.tar.gz
 git2_git.yoctoproject.org.gaku.tar.gz
@@ -289,6 +295,7 @@ git2_git.yoctoproject.org.libowl.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.4.git.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.4.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.8.git.tar.gz
+#git2_git.yoctoproject.org.linux-yocto-3.8.tar.gz
 git2_git.yoctoproject.org.matchbox-config-gtk.tar.gz
 git2_git.yoctoproject.org.matchbox-desktop-2.tar.gz
 git2_git.yoctoproject.org.matchbox-desktop-sato.tar.gz
@@ -318,6 +325,7 @@ git2_git.yoctoproject.org.yocto-kernel-tools.git.tar.gz
 git2_git.yoctoproject.org.zaurusd.tar.gz
 #git2_github.com.Freescale.u-boot-imx.git.tar.gz
 #git2_github.com.clrkwllms.rt-tests.git.tar.gz
+git2_github.com.clutter-project.mx.git.tar.gz
 git2_github.com.connectivity.connman-gnome.git.tar.gz
 #git2_github.com.hjl-tools.glibc.git.tar.gz
 #git2_github.com.hjl-tools.linux.git.tar.gz
@@ -545,7 +553,8 @@ iain-mem-leak.patch
 #icu4c-3_6-src.tgz
 #icu4c-50_1-src.tgz
 #icu4c-50_1_1-src.tgz
-icu4c-50_1_2-src.tgz
+#icu4c-50_1_2-src.tgz
+icu4c-51_2-src.tgz
 input_power-r7.patch
 input_power-r9.patch
 integrator_rgb-r1.patch
@@ -564,7 +573,8 @@ jpegsrc.v8d.tar.gz
 #less-444.tar.gz
 #less-451.tar.gz
 #less-456.tar.gz
-less-457.tar.gz
+#less-457.tar.gz
+less-458.tar.gz
 #libaio_0.3.107.orig.tar.gz
 libaio_0.3.109.orig.tar.gz
 libarchive-2.8.4.yocto.1.tar.gz
@@ -586,6 +596,7 @@ libtirpc-glibc-nfs.tar.xz
 libwsbm-cdv-1.1.0-3.1.i586.rpm
 libwsbm-cdv-devel-1.1.0-3.1.i586.rpm
 libz160-bin-11.09.01.bin
+linuxdoc-tools_0.9.69.orig.tar.gz
 locomo_kbd_tweak-r1.patch
 locomo_kbd_tweak-r2.patch
 locomo_led_fix-r0.patch
@@ -594,7 +605,8 @@ logo_oh-r1.patch.bz2
 #ltp-full-20120104.bz2
 #ltp-full-20120401.bz2
 #ltp-full-20120614.bz2
-ltp-full-20120903.bz2
+#ltp-full-20120903.bz2
+ltp-full-20130109.bz2
 lzma465.tar.bz2
 #lzo_crypto-r0b.patch
 #lzo_crypto-r2.patch
@@ -666,7 +678,8 @@ puzzles_ixion.tartarus.org_.main_7593_.tar.gz
 #puzzles_svn.tartarus.org_.sgt_9660_.tar.gz
 #puzzles_svn.tartarus.org_.sgt_9712_.tar.gz
 #puzzles_svn.tartarus.org_.sgt_9733_.tar.gz
-puzzles_svn.tartarus.org_.sgt_9751_.tar.gz
+#puzzles_svn.tartarus.org_.sgt_9751_.tar.gz
+puzzles_svn.tartarus.org_.sgt_9765_.tar.gz
 #pvr-bin-cdv-1.0.3-1.1.i586.rpm
 #pvr-bin-cdv-1.7.788837_05-1.1.i586.rpm
 #pvr-bin-cdv-1.7.788837_10-1.1.i586.rpm
@@ -718,10 +731,14 @@ spitzkbd_fix-r0.patch
 #sqlite-autoconf-3071401.tar.gz
 #sqlite-autoconf-3071500.tar.gz
 #sqlite-autoconf-3071501.tar.gz
-sqlite-autoconf-3071502.tar.gz
+#sqlite-autoconf-3071502.tar.gz
+#sqlite-autoconf-3071602.tar.gz
+sqlite-autoconf-3071700.tar.gz
 squashfs4.2.tar.gz
 sudo-1.6.8p12.patch.gz
-systemd-196.tar.xz
+#systemd-196.tar.xz
+#systemd-199.tar.xz
+systemd-204.tar.xz
 sysvinit-2.88dsf.tar.bz2
 tags.0.3.0._dev.eclipse.org_.svnroot.dsdp.org.eclipse.tm.tcf._1078_.tar.gz
 #tcl8.4.19-src.tar.gz
@@ -729,7 +746,8 @@ tags.0.3.0._dev.eclipse.org_.svnroot.dsdp.org.eclipse.tm.tcf._1078_.tar.gz
 #tcl8.5.9-src.tar.gz
 #tcl8.5.10-src.tar.gz
 #tcl8.5.11-src.tar.gz
-tcl8.5.13-src.tar.gz
+#tcl8.5.13-src.tar.gz
+tcl8.6.0-src.tar.gz
 #test-xvideo_svn.o-hand.com_.repos.misc.trunk_270_.tar.gz
 test-xvideo_svn.o-hand.com_.repos.misc.trunk_272_.tar.gz
 transfig.3.2.5d.tar.gz
@@ -759,7 +777,9 @@ trunk_ubootchart.googlecode.com_.svn._12_.tar.gz
 #tzcode2009r.tar.gz
 #tzcode2011g.tar.gz
 #tzcode2011i.tar.gz
-tzcode2012j.tar.gz
+#tzcode2012j.tar.gz
+#tzcode2013b.tar.gz
+tzcode2013c.tar.gz
 #tzdata2009s.tar.gz
 #tzdata2010j.tar.gz
 #tzdata2010o.tar.gz
@@ -772,7 +792,8 @@ tzcode2012j.tar.gz
 #tzdata2012b.tar.gz
 #tzdata2012c.tar.gz
 #tzdata2012d.tar.gz
-tzdata2012j.tar.gz
+#tzdata2012j.tar.gz
+tzdata2013b.tar.gz
 #udev-124.tar.gz
 #udev-141.tar.gz
 #udev-158.tar.gz
