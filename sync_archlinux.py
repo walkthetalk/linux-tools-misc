@@ -80,6 +80,7 @@ class csub_rep:
 			call("wget -N --progress=bar -P " + self._loc_dir + " " + self._main_page + i, shell=True)
 
 		if len(dl_list) != 0:
+			# multilib 没有 abs.tar.gz
 			abs_names = list(set(self.__abs_list) & set(self._fl_new))
 			abs_names.sort()
 
