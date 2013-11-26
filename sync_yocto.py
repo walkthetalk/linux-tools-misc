@@ -17,20 +17,14 @@ def g_download(rem_file, loc_dir):
 	call("wget -N --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
 class creg_file:
-	def __init__(self, parent, name, ts, size):
+	def __init__(self, parent, name):
 		self._parent = parent
 		self._name = name
-		self._ts = ts
-		self._size = size
 
 	def need_dl(self):
 		file_path = self._parent.loc_dir() + self._name
-		if os.path.exists(file_path):# and (os.path.getsize(file_path) == self._size):
-			stat_info = os.stat(file_path)
-#			dt_tmp = datetime.datetime.fromtimestamp(stat_info.st_mtime)
-#			my_print(" mtime is %s\n" % (dt_tmp.strftime("%d-%b-%Y %H:%M")))
-			if stat_info.st_mtime > time.mktime(time.strptime(self._ts, "%d-%b-%Y %H:%M")):
-				return False
+		if os.path.exists(file_path):
+			return False
 		return True
 	def download(self):
 		if self.need_dl():
@@ -57,26 +51,16 @@ class csub_rep:
 		prev_file = None
 		prev_pkg_name = ""
 		prev_pkg_ver = ""
-		for tr in soup.table.find_all("tr", recursive=False):
-			# skip header
-			if tr.th:
+		for link in soup.find_all("a"):
+			print(link["href"])
+			file_name = link["href"].strip()
+			#directory
+			if re.match(".*/$", file_name):
 				continue
-			# img
-			td = tr.td
-			if td.img["alt"] == "[DIR]":
-				continue
-			# a
-			td = td.find_next_sibling("td")
-			file_name = td.a["href"].strip()
+			#done file
 			if re.match(".*\.done$", file_name):
 				continue
-			# timestamp
-			td = td.find_next_sibling("td")
-			file_ts = td.string.strip()
-			# size
-			td = td.find_next_sibling("td")
-			file_size = td.string.strip()
-			if file_size == "0":
+			if re.match(".*\.lock$", file_name):
 				continue
 
 			# parse
@@ -84,13 +68,13 @@ class csub_rep:
 			if re.match(r"^.*"
 				"(_\.svn|\.trunk|svn\.)"
 				".*$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				self._fl_non_regular[file_name] = creg_file(self, file_name)
 				continue
 			if re.match(r"^git[2]?_.*$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				self._fl_non_regular[file_name] = creg_file(self, file_name)
 				continue
 			if re.match(r"^.*\.patch$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				self._fl_non_regular[file_name] = creg_file(self, file_name)
 				continue
 			m = re.match(r"^(?P<pkgname>.*)"
 				"(-|_|-s|\.v)"
@@ -101,7 +85,7 @@ class csub_rep:
 				"(?P<ext>tar\.bz2|tar\.gz|tar\.xz|tgz|zip|gz|bz2)"
 				"$", file_name)
 			if not m:
-				self._fl_non_regular[file_name] = creg_file(self, file_name, file_ts, file_size)
+				self._fl_non_regular[file_name] = creg_file(self, file_name)
 				continue
 
 			# regular file
@@ -114,14 +98,14 @@ class csub_rep:
 				# update prev
 				prev_pkg_name = pkgname
 				prev_pkg_ver = pkgver
-				prev_file = creg_file(self, file_name, file_ts, file_size)
+				prev_file = creg_file(self, file_name)
 
 			else: # same pkg
 				if prev_pkg_ver.startswith(pkgver) and prev_pkg_ver != pkgver:
 					None
 				else: # update prev
 					prev_pkg_ver = pkgver
-					prev_file = creg_file(self, file_name, file_ts, file_size)
+					prev_file = creg_file(self, file_name)
 		# the final one
 		if prev_file:
 			self._fl_regular[prev_file.name()] = prev_file
