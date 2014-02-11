@@ -52,7 +52,7 @@ class csub_rep:
 		prev_pkg_name = ""
 		prev_pkg_ver = ""
 		for link in soup.find_all("a"):
-			print(link["href"])
+			#print(link["href"])
 			file_name = link["href"].strip()
 			#directory
 			if re.match(".*/$", file_name):
@@ -94,6 +94,7 @@ class csub_rep:
 			pkgver = m.group("pkgver")
 			if pkgname != prev_pkg_name: # different pkg
 				if prev_file:
+					#print(prev_pkg_name, prev_pkg_ver)
 					self._fl_regular[prev_file.name()] = prev_file
 				# update prev
 				prev_pkg_name = pkgname
@@ -101,11 +102,20 @@ class csub_rep:
 				prev_file = creg_file(self, file_name)
 
 			else: # same pkg
-				if prev_pkg_ver.startswith(pkgver) and prev_pkg_ver != pkgver:
+				if prev_pkg_ver == pkgver:
 					None
-				else: # update prev
-					prev_pkg_ver = pkgver
-					prev_file = creg_file(self, file_name)
+				else:
+					prev_ver_array = re.split('[\._]', prev_pkg_ver)
+					ver_array = re.split('[\._]', pkgver)
+					for i,j in zip(prev_ver_array, ver_array):
+						pn = int(i)
+						cn = int(j)
+						if pn == cn:
+							continue
+						if pn < cn:
+							prev_pkg_ver = pkgver
+							prev_file = creg_file(self, file_name)
+						break
 		# the final one
 		if prev_file:
 			self._fl_regular[prev_file.name()] = prev_file
