@@ -1,0 +1,13 @@
+
+1. convet 3d->2d 2d->3d path:
+
+path[] pathfix(string text, pair pos)
+{
+	path[] tmp = project(path3(texpath(Label(text, pos))), perspective(0, -pos.y, 30));
+	if (pos.y < 0) {
+		tmp = scale(-1,-1) * tmp;
+	}
+
+	return tmp;
+}
+
