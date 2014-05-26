@@ -45,7 +45,7 @@ class csub_rep:
 		self._fl_ordered = []
 		self._loc_dir = loc_dir
 		# get index
-		call("wget -N --progress=bar -O " + "index.html" + " " + base_url, shell=True)
+		call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)
 		soup = BeautifulSoup(open("index.html"))
 		#print(soup.prettify())
 		prev_file = None
