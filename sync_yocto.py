@@ -7,6 +7,7 @@ import datetime
 import re
 import os
 import tempfile
+import subprocess
 
 from bs4 import BeautifulSoup
 from subprocess import call
@@ -17,14 +18,22 @@ def g_download(rem_file, loc_dir):
 	call("wget -N --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
 class creg_file:
-	def __init__(self, parent, name):
+	def __init__(self, parent, name, isregular):
 		self._parent = parent
 		self._name = name
+		self._isregular = isregular
 
 	def need_dl(self):
 		file_path = self._parent.loc_dir() + self._name
 		if os.path.exists(file_path):
-			return False
+			if self._isregular:
+				return False
+			else:
+				file_header_info = subprocess.check_output(["wget","--spider", self._parent.main_page() + self._name], stderr=subprocess.STDOUT, universal_newlines=True)
+				obj_size = re.sub(r'.*\nLength: ([0-9]+) \(.*', r'\1', file_header_info, flags=re.DOTALL)
+				# TODO: maybe we should use strict comparision, here just compare the size
+				if os.path.getsize(file_path) == (int)(obj_size):
+					return False
 		return True
 	def download(self):
 		if self.need_dl():
@@ -68,13 +77,13 @@ class csub_rep:
 			if re.match(r"^.*"
 				"(_\.svn|\.trunk|svn\.)"
 				".*$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, False)
 				continue
 			if re.match(r"^git[2]?_.*$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, False)
 				continue
 			if re.match(r"^.*\.patch$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, True)
 				continue
 			m = re.match(r"^(?P<pkgname>.*)"
 				"(-|_|-s|\.v)"
@@ -85,7 +94,7 @@ class csub_rep:
 				"(?P<ext>tar\.bz2|tar\.gz|tar\.xz|tgz|zip|gz|bz2)"
 				"$", file_name)
 			if not m:
-				self._fl_non_regular[file_name] = creg_file(self, file_name)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, True)
 				continue
 
 			# regular file
@@ -99,7 +108,7 @@ class csub_rep:
 				# update prev
 				prev_pkg_name = pkgname
 				prev_pkg_ver = pkgver
-				prev_file = creg_file(self, file_name)
+				prev_file = creg_file(self, file_name, True)
 
 			else: # same pkg
 				if prev_pkg_ver == pkgver:
@@ -114,7 +123,7 @@ class csub_rep:
 							continue
 						if pn < cn:
 							prev_pkg_ver = pkgver
-							prev_file = creg_file(self, file_name)
+							prev_file = creg_file(self, file_name, True)
 						break
 		# the final one
 		if prev_file:
