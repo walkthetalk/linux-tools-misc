@@ -1,0 +1,37 @@
+1. 數據庫
+	yaourt -S mariadb libmariadbclient apache
+	sudo systemctl enable mysqld
+	sudo systemctl start mysqld
+	mysql -u root -p
+	
+	mysql> CREATE DATABASE IF NOT EXISTS `gitlabhq_production`;
+	mysql> CREATE USER 'gitlab'@'localhost' IDENTIFIED BY 'gitlab';
+	mysql> GRANT SELECT, LOCK TABLES, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `gitlabhq_production`.* TO 'gitlab'@'localhost';
+	mysql> \q
+	
+	# just for verify
+	mysql -u gitlab -p -D gitlabhq_production
+2. 安裝 gitlab在文件 PKGBUILD 中函數 prepare的末尾添加一行：
+	sed -i 's/https:\/\/rubygems.org/https:\/\/ruby.taobao.org/' Gemfile
+3. 修改文件/etc/webapps/gitlab/database.yml中的production段的用戶名密碼爲gitlab
+4. 初始化數據庫
+	sudo systemctl start redis
+	sudo systemctl enable redis
+	cd /usr/share/webapps/gitlab
+	sudo -u gitlab bundle exec rake gitlab:setup RAILS_ENV=production
+	# 提示時輸入 yes
+5. 配置 httpd 服務
+	編輯文件 /etc/httpd/conf/httpd.conf
+	移除下面一行起始的#
+		#LoadModule rewrite_module modules/mod_rewrite.so
+	在文件尾部加一行
+		Include /etc/httpd/conf/extra/gitlab.conf
+	創建目錄/var/log/httpd/logs/
+6. 使能服務
+	sudo systemctl enable httpd gitlab.target gitlab-sidekiq gitlab-unicorn
+7. 重啓後登錄
+	username: admin@local.host
+	password: 5iveL!fe
+8. 額外
+	文件/etc/webapps/gitlab/gitlab.yml中的host控制網頁版上所顯示的庫地址，可以改成 gitlab.dev-srv.com
+	文件/etc/webapps/gitlab/shell.yml中的gitlab_url控制實際庫地址，此項不必修改，如果修改成了gitlab.dev-srv.com，則要在/etc/hosts中同步加上127.0.0.1 gitlab.dev-srv.com
