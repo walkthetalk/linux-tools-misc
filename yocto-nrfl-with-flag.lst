@@ -713,7 +713,7 @@ opkg-utils_svn.openmoko.org_.trunk.src.host._4747_.tar.gz
 patch-3.10.17-rt12.patch.bz2
 #pcmciautils-014.tar.bz2
 #pcmciautils-017.tar.bz2
-#pcmciautils-018.tar.bz2
+pcmciautils-018.tar.bz2
 pm_changes-r1.patch
 pmount_0.9.23.orig.tar.bz2
 poodle_asoc_fix-r1.patch
