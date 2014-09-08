@@ -1,0 +1,5 @@
+on ArchLinux 64bit, we should add following code in setting scripts:
+
+	unset QT_PLUGIN_PATH
+
+or we can't generate ip core normally.
