@@ -71,6 +71,8 @@ class csub_rep:
 				continue
 			if re.match(".*\.lock$", file_name):
 				continue
+			if re.match(".*bad-checksum.*", file_name):
+				continue
 
 			# parse
 			self._fl_ordered.append(file_name)
