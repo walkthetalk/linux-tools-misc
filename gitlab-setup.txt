@@ -35,3 +35,8 @@
 8. 額外
 	文件/etc/webapps/gitlab/gitlab.yml中的host控制網頁版上所顯示的庫地址，可以改成 gitlab.dev-srv.com
 	文件/etc/webapps/gitlab/shell.yml中的gitlab_url控制實際庫地址，此項不必修改，如果修改成了gitlab.dev-srv.com，則要在/etc/hosts中同步加上127.0.0.1 gitlab.dev-srv.com
+	如果出现较大库clone失败的情况，如：
+		error: RPC failed; result=18, HTTP code = 200
+		fatal: The remote end hung up unexpectedly
+	这个可能是http服务器超时时间的问题，如apach的服务则需要修改文件/etc/httpd/conf/extra/httpd-default.conf中的Timeout
+	
