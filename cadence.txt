@@ -1,0 +1,4 @@
+1. 無法啓動的問題
+   症狀：/opt/cadence/tools.lnx86/bin/allegro.exe: symbol lookup error: /usr/lib64/libXext.so.6: undefined symbol: _XGetRequest
+   解決辦法：
+   如果是64位的，使用/usr/lib64/libX11.so.6.3.0 覆盖掉安装目录下的tools/mainwin540/mw/lib-amd64_linux/X11下的libX11.so.6.3.0即可。32位的请自行找对应的文件和目录
