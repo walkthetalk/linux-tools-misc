@@ -85,3 +85,6 @@
 
 4. 启动
    csh -c "source {ROOT_DIR}/tools/pcb/bin/cshrc; allegro"
+
+5. 卡的问题
+   在 /etc/hosts 最开始加一条本机名（严格来讲应该是 license.lic 中的主机名），指向 127.0.0.1 即可
