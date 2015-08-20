@@ -19,3 +19,69 @@
 3. 路径说明
    许可证路径：{ROOT_DIR}/share/license
    先用此目录下的 configure 配置许可证，然后启动 rc.lic
+
+   配置 license
+   [ll@YiQingliang-PC license]$ ./configure
+
+		Do you want to configure licensing? <y/n> [n] -> y
+		Enter the top installation directory <q to quit>
+		[/mnt/tools/cadence_spb] ->
+
+		Edit the license file or the startup script now? <y/n/q> [y] ->
+
+		Override the defaults? <y/n/q> [n] -> y
+
+		Configure license file license.lic? <y/n/q> [y] ->
+
+		Enter the hostname of the computer with hostid ID=07071982 <q to quit>
+		[YiQingliang-PC] ->
+
+		Enter the TCP port number <q to quit>
+		] ->
+
+		daemon for YiQingliang-PC <q to quit>
+		] -> /mnt/tools/cadence_spb/tools/bin/cdslmd
+
+		's OPTIONS file for YiQingliang-PC <q to quit>
+		[no options] ->
+
+		Enter the installation directory the license daemons should use <q to quit>
+		[/mnt/tools/cadence_spb] ->
+
+		Enter the license file the license daemons should use <q to quit>
+		[/mnt/tools/cadence_spb/share/license/license.lic] ->
+
+		Enter the debug log file the license daemons should use <q to quit>
+		[/usr/tmp/license.log] -> /tmp/license.log
+
+		Enter the new lmgrd daemon option <q to quit>
+		[no options] ->
+
+		****************************************************************
+
+		Configure the clients file <y/n/q> [y] ->
+
+		Override the default? <y/n/q> [n] -> y
+
+		Create a new clients file [c] or append to the existing one [a] <q to quit>
+		[c] -> c
+
+		Enter the host name of the client
+		<* for all, <CR> to end input, q to quit> -> YiQingliang-PC
+
+		Enter the path to the license file from YiQingliang-PC <q to quit>
+		[] -> /mnt/tools/cadence_spb/share/license/license.lic
+
+		Enter the host name of the client
+		<* for all, <CR> to end input, q to quit> ->
+
+		Edit YiQingliang-PC's boot script? <y/n/q> [y] -> n
+
+		Start the license server daemons? <y/n/q> [n] -> n
+
+		**********************************************************************
+		[ll@YiQingliang-PC license]$ ./rc.lic
+
+
+4. 启动
+   csh -c "source {ROOT_DIR}/tools/pcb/bin/cshrc; allegro"
