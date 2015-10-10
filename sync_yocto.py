@@ -55,7 +55,7 @@ class csub_rep:
 		self._loc_dir = loc_dir
 		# get index
 		call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)
-		soup = BeautifulSoup(open("index.html"))
+		soup = BeautifulSoup(open("index.html"), "html.parser")
 		#print(soup.prettify())
 		prev_file = None
 		prev_pkg_name = ""
