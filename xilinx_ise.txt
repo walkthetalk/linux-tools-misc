@@ -1,5 +1,11 @@
+ISE:
 on ArchLinux 64bit, we should add following code in setting scripts:
 
 	unset QT_PLUGIN_PATH
 
 or we can't generate ip core normally.
+
+VIVADO:
+on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup'
+	cd /usr/lib
+	sudo cp libncursesw.so.6.0 libncurses.so.5
