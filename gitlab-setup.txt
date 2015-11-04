@@ -42,4 +42,5 @@
 		error: RPC failed; result=18, HTTP code = 200
 		fatal: The remote end hung up unexpectedly
 	这个可能是http服务器超时时间的问题，如apach的服务则需要修改文件/etc/httpd/conf/extra/httpd-default.conf中的Timeout
+	导入库或下载zip时如果失败请检查 /var/log/gitlab/unicorn.stderr.log 中是否有内存超限的问题，如果有，则修改文件 /usr/share/webapps/gitlab/config.ru，将其中的内存限制改大
 	
