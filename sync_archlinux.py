@@ -70,6 +70,9 @@ class csub_rep:
 			".files",
 			".files.tar.gz",
 			".files.tar.gz.old"):
+			# multilib 没有 abs.tar.gz
+			if (i == ".abs.tar.gz" and self._repo_name == "multilib"):
+				continue
 			self.__abs_list.append(self._repo_name + i)
 
 	def download(self):
@@ -80,23 +83,27 @@ class csub_rep:
 			call("wget -N --progress=bar -P " + self._loc_dir + " " + self._main_page + i, shell=True)
 
 		if len(dl_list) != 0:
-			# multilib 没有 abs.tar.gz
-			abs_names = list(set(self.__abs_list) & set(self._fl_new))
-			abs_names.sort()
-
+			abs_names = self.__abs_list
 			bkup_dir = tempfile.mkdtemp(prefix="syncarch_") + "/"
 			for i in abs_names:
 				print("dling " + i)
 				call("wget -N --progress=bar -P " + bkup_dir + " " + self._main_page + i, shell=True)
 
 			for i in abs_names:
+				print("mving " + i)
 				call("mv " + bkup_dir + i + " " + self._loc_dir + i, shell=True)
 			os.rmdir(bkup_dir)
 
-	def rm_old_files(self):
-		for i in (set(self._fl_old) - set(self._fl_new)):
-			print("rming " + i)
-			os.remove(self._loc_dir + i)
+			# check if we got right file lists
+			tmp_list = list(set(self.__abs_list) - set(self._fl_new))
+			if len(tmp_list) != 0:
+				print("error for " + self._repo_name + ": can't remove for error index.")
+				return
+
+			# remove old files
+			for i in (set(self._fl_old) - set(self._fl_new)):
+				print("rming " + i)
+				os.remove(self._loc_dir + i)
 
 if __name__ == '__main__':
 	repos = ["core",
@@ -112,4 +119,3 @@ if __name__ == '__main__':
 		print("dling repo %s:" % (repo))
 		test = csub_rep(repo, "http://" + g_host + '/archlinux/' + repo + '/os/x86_64/', g_loc_base_dir + repo + "/os/x86_64/")
 		test.download()
-		test.rm_old_files()
