@@ -31,7 +31,7 @@
 		（gitlab.conf 参考https://gitlab.com/gitlab-org/gitlab-recipes.git）
 	創建目錄/var/log/httpd/logs/
 6. 使能服務
-	sudo systemctl enable httpd gitlab.target gitlab-sidekiq gitlab-unicorn gitlab-git-http
+	sudo systemctl enable httpd gitlab.target gitlab-sidekiq gitlab-unicorn gitlab-workhorse
 7. 重啓後登錄
 	username: admin@local.host
 	password: 5iveL!fe
