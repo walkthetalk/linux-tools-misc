@@ -14,6 +14,8 @@
 2.安装gitlab相关软件包
 	a.安裝 gitlab在文件 PKGBUILD 中函數 prepare的末尾添加一行：
 		sed -i 's/https:\/\/rubygems.org/https:\/\/ruby.taobao.org/' Gemfile
+	p.s. 安裝 ruby-bundler 時會出現無法下載的情況，請手動下載相關文件（改用 http 的鏈接）
+		https://rubygems.global.ssl.fastly.net/gems/bundler-1.11.2.gem
 	b.安装gitlab-git-http-server
 3. 修改文件/etc/webapps/gitlab/database.yml中的production段的用戶名密碼爲gitlab
 4. 初始化數據庫
