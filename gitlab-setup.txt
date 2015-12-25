@@ -18,7 +18,8 @@
 		https://rubygems.global.ssl.fastly.net/gems/bundler-1.11.2.gem
 	b.安装 gitlab-workhorse
 3. 修改文件/etc/webapps/gitlab/database.yml中的production段的用戶名密碼爲gitlab
-4. 初始化數據庫
+	保證用戶名密碼與第一步中的用戶名密碼一致
+4. 初始化數據庫（如有需要請先 su root）
 	sudo systemctl start redis
 	sudo systemctl enable redis
 	cd /usr/share/webapps/gitlab
