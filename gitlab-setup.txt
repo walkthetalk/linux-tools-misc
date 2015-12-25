@@ -21,9 +21,8 @@
 	保證用戶名密碼與第一步中的用戶名密碼一致
 4. 初始化數據庫（如有需要請先 su root）
 	sudo systemctl start redis
-	sudo systemctl enable redis
-	cd /usr/share/webapps/gitlab
-	sudo -u gitlab bundle exec rake gitlab:setup RAILS_ENV=production
+	su - gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; bundle-2.1 exec rake assets:precompile RAILS_ENV=production"
+	su - gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; bundle-2.1 exec rake gitlab:setup RAILS_ENV=production"
 	# 提示時輸入 yes
 5. 配置 httpd 服務
 	編輯文件 /etc/httpd/conf/httpd.conf
@@ -31,10 +30,10 @@
 		#LoadModule rewrite_module modules/mod_rewrite.so
 	在文件尾部加一行
 		Include /etc/httpd/conf/extra/gitlab.conf
-		（gitlab.conf 参考https://gitlab.com/gitlab-org/gitlab-recipes.git）
-	創建目錄/var/log/httpd/logs/
+	sudo cp /etc/webapps/gitlab/apache.conf.example /etc/httpd/conf/extra/gitlab.conf
+	sudo mkdir /var/log/httpd/logs/
 6. 使能服務
-	sudo systemctl enable httpd gitlab.target gitlab-sidekiq gitlab-unicorn gitlab-workhorse
+	sudo systemctl enable httpd gitlab.target gitlab-workhorse
 7. 重啓後登錄
 	username: admin@local.host
 	password: 5iveL!fe
