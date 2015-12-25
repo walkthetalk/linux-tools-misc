@@ -31,6 +31,11 @@
 	在文件尾部加一行
 		Include /etc/httpd/conf/extra/gitlab.conf
 	sudo cp /etc/webapps/gitlab/apache.conf.example /etc/httpd/conf/extra/gitlab.conf
+	修改 /etc/httpd/conf/extra/gitlab.conf：
+		如有需要請修改 <VirtualHost *:80> 中的 '*'
+		修改所有的 YOUR_SERVER_FQDN
+	修改 /lib/systemd/system/gitlab-workhorse.service:
+		按 /etc/httpd/conf/extra/gitlab.conf 中的提示修改 workhorse 的參數
 	sudo mkdir /var/log/httpd/logs/
 6. 使能服務
 	sudo systemctl enable httpd gitlab.target gitlab-workhorse
