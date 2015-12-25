@@ -35,7 +35,7 @@
 6. 使能服務
 	sudo systemctl enable httpd gitlab.target gitlab-workhorse
 7. 重啓後登錄
-	username: admin@local.host
+	username: admin@local.host or admin@example.com
 	password: 5iveL!fe
 8. 額外
 	文件/etc/webapps/gitlab/gitlab.yml中的host控制網頁版上所顯示的庫地址，可以改成 gitlab.dev-srv.com
