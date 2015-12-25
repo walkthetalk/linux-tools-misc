@@ -16,7 +16,7 @@
 		sed -i 's/https:\/\/rubygems.org/https:\/\/ruby.taobao.org/' Gemfile
 	p.s. 安裝 ruby-bundler 時會出現無法下載的情況，請手動下載相關文件（改用 http 的鏈接）
 		https://rubygems.global.ssl.fastly.net/gems/bundler-1.11.2.gem
-	b.安装gitlab-git-http-server
+	b.安装 gitlab-workhorse
 3. 修改文件/etc/webapps/gitlab/database.yml中的production段的用戶名密碼爲gitlab
 4. 初始化數據庫
 	sudo systemctl start redis
