@@ -163,7 +163,7 @@ class csub_rep:
 	def download(self):
 		#for k in self._fl_ordered:
 		#	print("{}{}".format("" if k in self._fl_dl else "#", k))
-		for (k, v) in self._fl_dl.items():
+		for (k, v) in sorted(self._fl_dl.items()):
 			v.download()
 
 		return
