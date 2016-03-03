@@ -15,7 +15,7 @@ import fileinput
 
 # the `-N' option can make wget overwrite the old file
 def g_download(rem_file, loc_dir):
-	call("wget -N --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
+	call("wget -N --timeout=10 --wait=10 --tries=0 --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
 class creg_file:
 	def __init__(self, parent, name, isregular):
