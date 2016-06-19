@@ -15,7 +15,8 @@ from subprocess import call
 import fileinput
 
 #g_host = "mirrors.163.com"
-g_host = "mirrors.ustc.edu.cn"
+#g_host = "mirror.bjtu.edu.cn"
+g_host = "mirrors.neusoft.edu.cn"
 g_loc_base_dir = "/srv/http/archlinux/"
 
 class csub_rep:
@@ -35,10 +36,24 @@ class csub_rep:
 		soup = BeautifulSoup(open("index.html"))
 		os.rmdir(tmp_dir)
 
-		for a in soup.pre.find_all("a", recursive=False):
+		tmp_node = soup.pre	# 163
+		if not tmp_node:
+			tmp_node = soup.find("table")	# bjtu
+			if tmp_node:
+				if tmp_node.find("tbody"):
+					tmp_node = tmp_node.find("tbody")
+		if not tmp_node:
+			print(" no data found!!!")
+
+		for a in tmp_node.find_all("a"):
 			# string的内容如果太长，html显示的是省略号
 			#self._fl_new.add(a.string);
 			file_name = a["href"]
+			#print(file_name)
+			#if not file_name:
+			#	continue
+			#if re.match(".*/.*", file_name):
+			#	continue
 			# 去除上一级目录
 			if file_name == "../":
 				continue
