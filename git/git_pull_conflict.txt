@@ -1,0 +1,39 @@
+Your local changes to the following files would be overwritten by merge
+error: Your local changes to the following files would be overwritten by merge:
+
+
+        protected/config/main.php
+Please, commit your changes or stash them before you can merge.
+
+
+参考http://blog.csdn.net/zwhfyy/article/details/8625228
+
+
+如果希望保留生产服务器上所做的改动,仅仅并入新配置项, 处理方法如下:
+
+
+git stash
+git pull
+git stash pop
+然后可以使用git diff -w +文件名 来确认代码自动合并的情况.
+
+反过来,如果希望用代码库中的文件完全覆盖本地工作版本. 方法如下:
+
+git reset --hard
+git pull
+其中git reset是针对版本,如果想针对文件回退本地修改,使用
+
+untracked working tree file
+参考：http://blog.csdn.net/sheismylife/article/details/7204345
+编写脚本自动编译并部署时的注意
+
+如果想在C2上编写脚本自动从S1上获取最新代码时，要注意：
+1.首先之前产生的公钥不能设密码，否则每次git pull的时候都会要求输入密码。
+2.不要将项目中的编译中间文件提交到S1上，比如CMake工程里面的build目录的文件，Maven工程里面的target目录里面的文件。否则下次在C2等客户端用git pull会报类似于这样的错误：
+
+error: Untracked working tree file 'public/images/icon.gif' would be overwritten by merge.
+需要执行下面的命令才能修复：
+
+git reset --hard HEAD    
+git clean -f -d    
+git pull  
