@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-#define SKIP_LEN (16 * 7)
+#define FPGA_BIN_SIZE (4045564)
 
 int main(int argc, char * argv[])
 {
 	FILE * sp = NULL;
 	FILE * dp = NULL;
-	long len = 0;
+	long skip_len = 0;
 	void * content = NULL;
 	size_t ret = -1;
 
@@ -29,25 +30,26 @@ int main(int argc, char * argv[])
 	}
 
 	fseek(sp, 0, SEEK_END);
-	len = ftell(sp) - SKIP_LEN;
-	fseek(sp, SKIP_LEN, SEEK_SET);
+	skip_len = ftell(sp) - FPGA_BIN_SIZE;
+	assert(skip_len > 0);
+	fseek(sp, skip_len, SEEK_SET);
 
-	content = malloc(len);
+	content = malloc(FPGA_BIN_SIZE);
 	if (!content) {
 		printf("malloc failure\n");
 		goto exit3;
 	}
 
-	ret = fread(content, len, 1, sp);
+	ret = fread(content, FPGA_BIN_SIZE, 1, sp);
 	if (ret != 1) {
-		printf("read %ld error: %ld\n", len, (long)1);
+		printf("read %ld error: %ld\n", FPGA_BIN_SIZE, (long)1);
 		goto exit4;
 	}
 
 	{
 		long i = 0;
 		char * p = content;
-		for (i = 0; i < len; i += 4) {
+		for (i = 0; i < FPGA_BIN_SIZE; i += 4) {
 			char tmp;
 			tmp = p[3]; p[3] = p[0]; p[0] = tmp;
 			tmp = p[2]; p[2] = p[1]; p[1] = tmp;
@@ -55,7 +57,7 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	ret = fwrite(content, len, 1, dp);
+	ret = fwrite(content, FPGA_BIN_SIZE, 1, dp);
 	if (ret != 1) {
 		printf("write error\n");
 		goto exit4;
