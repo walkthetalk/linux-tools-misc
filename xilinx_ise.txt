@@ -9,3 +9,6 @@ VIVADO:
 on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup'
 	cd /usr/lib
 	sudo cp libncursesw.so.6.0 libncurses.so.5
+font:
+	export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=setting'
+https://wiki.archlinux.org/index.php/Java_Runtime_Environment_fonts
