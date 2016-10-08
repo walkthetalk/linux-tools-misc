@@ -1,0 +1,2 @@
+1. initdb
+	sudo -upostgres initdb -E UTF8 -k --locale=en_US.UTF-8 -D /var/lib/postgresql
