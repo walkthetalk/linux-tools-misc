@@ -1,2 +1,6 @@
 1. initdb
 	sudo -upostgres initdb -E UTF8 -k --locale=en_US.UTF-8 -D /var/lib/postgresql
+2. start service
+	systemctl restart postgresql
+3. createdb
+	createdb -U postgres fsdb "main database for fusion splicer configuration"
