@@ -4,3 +4,10 @@
 	systemctl restart postgresql
 3. createdb
 	createdb -U postgres fsdb "main database for fusion splicer configuration"
+4. rebuild template1
+	$ psql -U postgres postgres
+	update pg_database set datistemplate = false where datname='template1';
+	drop database template1;
+	create database template1 template=template0;
+	update pg_database set datistemplate = true where datname='template1';
+
