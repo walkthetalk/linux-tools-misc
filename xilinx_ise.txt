@@ -12,3 +12,8 @@ on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup'
 font:
 	export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=setting'
 https://wiki.archlinux.org/index.php/Java_Runtime_Environment_fonts
+
+license:
+	ip tuntap add dev eth0 mode tap
+	ifconfig eth0 up
+	ip link set dev eth0 address 66:55:44:33:22:11
