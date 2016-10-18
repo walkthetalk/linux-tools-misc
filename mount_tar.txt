@@ -1,0 +1,5 @@
+avfs
+	AVFSBASE - the environment variable is the directory mounted to. default value is ${HOME}/.avfs
+example:
+	mountavfs
+	cd <xxx>/<yyy>.tar.gz\#
