@@ -17,3 +17,6 @@ license:
 	ip tuntap add dev eth0 mode tap
 	ifconfig eth0 up
 	ip link set dev eth0 address 66:55:44:33:22:11
+
+docnav:
+	install lib32-libpng12
