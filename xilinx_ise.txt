@@ -6,7 +6,7 @@ on ArchLinux 64bit, we should add following code in setting scripts:
 or we can't generate ip core normally.
 
 VIVADO:
-on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup'
+before 2016.3, and on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup'
 	cd /usr/lib
 	sudo cp libncursesw.so.6.0 libncurses.so.5
 font:
