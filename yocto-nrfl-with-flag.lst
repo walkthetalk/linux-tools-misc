@@ -461,6 +461,7 @@ git2_git.yoctoproject.org.libowl.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-3.8.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-4.1.git.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-4.4.git.tar.gz
+#git2_git.yoctoproject.org.linux-yocto-4.8.git.tar.gz
 #git2_git.yoctoproject.org.linux-yocto-dev.git.tar.gz
 git2_git.yoctoproject.org.matchbox-config-gtk.tar.gz
 git2_git.yoctoproject.org.matchbox-desktop-2.tar.gz
