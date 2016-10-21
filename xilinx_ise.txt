@@ -6,17 +6,19 @@ on ArchLinux 64bit, we should add following code in setting scripts:
 or we can't generate ip core normally.
 
 VIVADO:
-before 2016.3, and on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup', and ${INSTALL_DIR}/.xinstall/Vivado_2016.2/xsetup after install.
+1. before 2016.3, and on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup', and ${INSTALL_DIR}/.xinstall/Vivado_2016.2/xsetup after install.
+
+2. libcurses:
 	cd /usr/lib
 	sudo cp libncursesw.so.6.0 libncurses.so.5
-font:
+3. font:
 	export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=setting'
 https://wiki.archlinux.org/index.php/Java_Runtime_Environment_fonts
 
-license:
+4. license for eth0:
 	ip tuntap add dev eth0 mode tap
 	ifconfig eth0 up
 	ip link set dev eth0 address 66:55:44:33:22:11
-
-docnav:
-	install lib32-libpng12
+5. docnav:
+	1) install lib32-libpng12
+	2) remove /opt/Xilinx/Vivado/2016.3/ids_lite/ISE/lib/lin64/libstdc++.so.6
