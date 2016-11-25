@@ -56,4 +56,5 @@
 		/usr/lib/systemd/system/gitlab-workhorse.service : 修改参数
 		/etc/webapps/gitlab/gitlab.yml : gitlab_shell / repos_path
 		/etc/webapps/gitlab-shell/config.yml : repos_path
-	
+9. 关于 mirror 库不显示 tag 的问题：
+	sudo -u gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; RAILS_ENV=production bundle-2.1 exec rake cache:clear"
