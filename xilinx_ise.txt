@@ -22,3 +22,11 @@ https://wiki.archlinux.org/index.php/Java_Runtime_Environment_fonts
 5. docnav:
 	1) install lib32-libpng12
 	2) remove /opt/Xilinx/Vivado/2016.3/ids_lite/ISE/lib/lin64/libstdc++.so.6
+
+problem:
+1. tcl command 'copy_bd_objs': can't assign name for destination.
+2. tcl command 'create_bd_cell': can't assign property when creating cell
+3. can't sync configuration of video IPs, in other words, if we wan't to change config, must stop all video IPs.
+4. to processing input stream from cmos sensor, all IPs should not consume FIFO before converted to axi stream.
+   but all video IPs are axi stream interfaced, so we must convert input to axi stream first, which will waste many FIFO, LUT/FF.
+5. the VDMA: what's the object of integrating read/write channel into one IP? Is it for data integrity, i.e. don't read channel being wrote, and don't write channel being read? If so, I think both channel should use same buffer address, which is not implemented by the IP.
