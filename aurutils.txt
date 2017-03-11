@@ -1,0 +1,16 @@
+*. prepare: install aurutils
+git clone https://aur.archlinux.org/aurutils.git/
+cd aurutils
+makepkg -si
+sudo pacman -U <pack_name>
+
+1. generate local repo
+repo-add -n <local_repo_path>/<repo_name>.db.tar.gz
+
+2. add it in pacman.conf
+[<repo_name>]
+SigLevel = Optional TrustAll
+Server = file://<local_repo_path>
+
+3. install some package in aur
+aursync --repo <repo_name> <package_name>
