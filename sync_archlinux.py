@@ -33,7 +33,7 @@ class csub_rep:
 			+ " -O index.html"
 			+ " -P " + tmp_dir
 			+ " " + self._main_page, shell=True)
-		soup = BeautifulSoup(open("index.html"))
+		soup = BeautifulSoup(open("index.html"), "html.parser")
 		os.rmdir(tmp_dir)
 
 		tmp_node = soup.pre	# 163
