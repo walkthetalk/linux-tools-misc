@@ -1,60 +1,111 @@
-1. 數據庫
-	yaourt -S mariadb libmariadbclient apache
-	sudo systemctl enable mysqld
-	sudo systemctl start mysqld
-	mysql -u root -p
-	
-	mysql> CREATE DATABASE IF NOT EXISTS `gitlabhq_production`;
-	mysql> CREATE USER 'gitlab'@'localhost' IDENTIFIED BY 'gitlab';
-	mysql> GRANT SELECT, LOCK TABLES, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `gitlabhq_production`.* TO 'gitlab'@'localhost';
+1. install
+	pacman -R ruby
+	pacman -S mariadb gitlab
+
+2. 创建数据库
+	# systemctl start mysqld
+	# mysql -u root -p
+
+	mysql> CREATE DATABASE `gitlabhq_production` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`;
+	mysql> CREATE USER 'gitlab'@'localhost' IDENTIFIED BY 'secure password';
+	mysql> GRANT ALL ON `gitlabhq_production`.* TO 'gitlab'@'localhost';
 	mysql> \q
-	
-	# just for verify
-	mysql -u gitlab -p -D gitlabhq_production
-2.安装gitlab相关软件包
-	a.安裝 gitlab在文件 PKGBUILD 中函數 prepare的末尾添加一行：
-		sed -i 's/https:\/\/rubygems.org/https:\/\/ruby.taobao.org/' Gemfile
-	p.s. 安裝 ruby-bundler 時會出現無法下載的情況，請手動下載相關文件（改用 http 的鏈接）
-		https://rubygems.global.ssl.fastly.net/gems/bundler-1.11.2.gem
-	b.安装 gitlab-workhorse
-3. 修改文件/etc/webapps/gitlab/database.yml中的production段的用戶名密碼爲gitlab
-	保證用戶名密碼與第一步中的用戶名密碼一致
-4. 初始化數據庫（如有需要請先 su root）
-	sudo systemctl start redis
-	su - gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; bundle-2.1 exec rake assets:precompile RAILS_ENV=production"
-	su - gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; bundle-2.1 exec rake gitlab:setup RAILS_ENV=production"
-	# 提示時輸入 yes
-5. 配置 httpd 服務
-	編輯文件 /etc/httpd/conf/httpd.conf
-	移除下面一行起始的#
-		#LoadModule rewrite_module modules/mod_rewrite.so
-	在文件尾部加一行
-		Include /etc/httpd/conf/extra/gitlab.conf
-	sudo cp /etc/webapps/gitlab/apache.conf.example /etc/httpd/conf/extra/gitlab.conf
-	修改 /etc/httpd/conf/extra/gitlab.conf：
-		如有需要請修改 <VirtualHost *:80> 中的 '*'
-		修改所有的 YOUR_SERVER_FQDN
-	修改 /lib/systemd/system/gitlab-workhorse.service:
-		按 /etc/httpd/conf/extra/gitlab.conf 中的提示修改 workhorse 的參數
-	sudo mkdir /var/log/httpd/logs/
-6. 使能服務
-	sudo systemctl enable httpd gitlab.target gitlab-workhorse
-7. 重啓後登錄
-	username: admin@local.host or admin@example.com or root
-	password: 5iveL!fe
-8. 額外
+
+	# 修改密码用
+	# SET PASSWORD FOR 'gitlab'@'localhost' = PASSWORD('secure password');
+
+	测试连接数据库是否正常：
+	# mysql -u gitlab -p -D gitlabhq_production
+	# 输入上一步中设置的密码
+
+3. 配置数据库
+	# cp /usr/share/doc/gitlab/database.yml.mysql /etc/webapps/gitlab/database.yml
+	# chmod 600 /etc/webapps/gitlab/database.yml
+	# chown gitlab:gitlab /etc/webapps/gitlab/database.yml
+	检查其中的用户名和密码是否跟上一步中的一致，若步一致则修改
+
+
+4. 生成 secret
+	如果没有做此步，则可能出现只能不能 push 的情况，具体为 401 鉴权失败
+
+	# hexdump -v -n 64 -e '1/1 "%02x"' /dev/urandom > /etc/webapps/gitlab-shell/secret
+	# chown root:gitlab /etc/webapps/gitlab-shell/secret
+	# chmod 640 /etc/webapps/gitlab-shell/secret
+	# hexdump -v -n 64 -e '1/1 "%02x"' /dev/urandom > /etc/webapps/gitlab/secret
+	# chown root:gitlab /etc/webapps/gitlab/secret
+	# chmod 640 /etc/webapps/gitlab/secret
+
+5. 配置 redis （基于 gitlab/resque.yml 中 production 的配置）
+	编辑 /etc/redis.conf
+		unixsocket /var/run/redis/redis.sock
+		unixsocketperm 770
+	编辑 /etc/webapps/gitlab-shell/config.yml
+		socket: /var/run/redis/redis.sock
+
+	修改用户组
+		sudo usermod -a -G redis git
+		sudo usermod -a -G redis gitlab
+
+	启动 redis
+		systemctl start redis
+
+6. 配置 git
+	文件名为 /var/lib/gitlab/.gitconfig，链接到 /etc/webapps/gitlab-shell/gitconfig
+
+	# sudo -u gitlab -H "/usr/bin/git" config --global user.name  "GitLab"
+	# sudo -u gitlab -H "/usr/bin/git" config --global user.email "example@example.com"
+	# sudo -u gitlab -H "/usr/bin/git" config --global core.autocrlf "input"
+
+	修改权限
+		sudo chmod 700 /var/lib/gitlab/uploads
+
+7. 初始化数据库
+	su - gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; bundle-2.3 exec rake gitlab:setup RAILS_ENV=production"
+
+	检查
+	# su - gitlab -s /bin/sh -c "PATH=/opt/ruby2.3/bin:/opt/ruby2.3/lib/ruby/gems/2.3.0/bin:$PATH; cd '/usr/share/webapps/gitlab'; bundle-2.3 exec rake gitlab:env:info RAILS_ENV=production"
+	# systemctl start gitlab.target
+	# su - gitlab -s /bin/sh -c "PATH=/opt/ruby2.3/bin:/opt/ruby2.3/lib/ruby/gems/2.3.0/bin:$PATH; cd '/usr/share/webapps/gitlab'; bundle-2.3 exec rake gitlab:check RAILS_ENV=production"
+
+8. http
+	配置 gitlab-workhorse.service (源于/etc/httpd/conf/extra/gitlab.conf)
+		使用 8181 tcp
+
+	配置 /etc/httpd/conf/extra/gitlab.conf
+		cp /usr/share/doc/gitlab/apache.conf.example /etc/httpd/conf/extra/gitlab.conf
+		修改 /etc/httpd/conf/extra/gitlab.conf：
+			如有需要請修改 <VirtualHost *:80> 中的 '*' 为 第 2 步中的 host
+			替换 YOUR_SERVER_FQDN 为 第 2 步中的 host
+			检查 log 目录是否存在
+				mkdir /var/log/httpd/logs/
+
+	编辑 /etc/httpd/conf/httpd.conf
+		移除下面几行起始的#，(源于/etc/httpd/conf/extra/gitlab.conf)
+			LoadModule rewrite_module modules/mod_rewrite.so
+			LoadModule proxy_module modules/mod_proxy.so
+			LoadModule proxy_http_module modules/mod_proxy_http.so
+		添加如下内容
+			Include conf/extra/gitlab.conf
+
+9. 額外
 	文件/etc/webapps/gitlab/gitlab.yml中的host控制網頁版上所顯示的庫地址，可以改成 gitlab.dev-srv.com
-	文件 /etc/webapps/gitlab-shell/config.yml  中的gitlab_url控制實際庫地址，此項不必修改，如果修改成了gitlab.dev-srv.com，則要在/etc/hosts中同步加上127.0.0.1 gitlab.dev-srv.com
+
+	文件 /etc/webapps/gitlab-shell/config.yml  中的gitlab_url控制實際庫地址，此項不必修改
+	如果修改成了gitlab.dev-srv.com，則要在/etc/hosts中同步加上127.0.0.1 gitlab.dev-srv.com
+
 	如果出现较大库clone失败的情况，如：
 		error: RPC failed; result=18, HTTP code = 200
 		fatal: The remote end hung up unexpectedly
 	这个可能是http服务器超时时间的问题，如apach的服务则需要修改文件/etc/httpd/conf/extra/httpd-default.conf中的Timeout
+
 	导入库或下载zip时如果失败请检查 /var/log/gitlab/unicorn.stderr.log 中是否有内存超限的问题，如果有，则:
 		1) 修改文件 /etc/webapps/gitlab/unicorn.rb，增大工作線程數目，或
 		2) 修改文件 /usr/share/webapps/gitlab/config.ru，将其中的内存限制改大
+
 	修改库路径：
 		/usr/lib/systemd/system/gitlab-workhorse.service : 修改参数
 		/etc/webapps/gitlab/gitlab.yml : gitlab_shell / repos_path
 		/etc/webapps/gitlab-shell/config.yml : repos_path
-9. 关于 mirror 库不显示 tag 的问题：
-	sudo -u gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; RAILS_ENV=production bundle-2.1 exec rake cache:clear"
+
+	关于 mirror 库不显示 tag 的问题：
+		sudo -u gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; RAILS_ENV=production bundle-2.1 exec rake cache:clear"
