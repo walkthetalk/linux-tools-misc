@@ -1,0 +1,1 @@
+简繁切换： CTRL + SHIFT + F
