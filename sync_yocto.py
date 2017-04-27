@@ -54,14 +54,15 @@ class csub_rep:
 		self._fl_ordered = []
 		self._loc_dir = loc_dir
 		# get index
-		call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)
+		#call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)
 		soup = BeautifulSoup(open("index.html"), "html.parser")
 		#print(soup.prettify())
 		prev_file = None
 		prev_pkg_name = ""
 		prev_pkg_ver = ""
-		for link in soup.find_all("a"):
+		for link in soup.html.body.table.tbody.find_all("a"):
 			#print(link["href"])
+			#continue
 			file_name = link["href"].strip()
 			#directory
 			if re.match(".*/$", file_name):
