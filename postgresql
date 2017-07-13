@@ -1,9 +1,16 @@
 1. initdb
 	sudo -upostgres initdb -E UTF8 -k --locale=en_US.UTF-8 -D /var/lib/postgresql
+	-L : used for init template, the default template init script is /usr/share/postgresql/postgres.bki
 2. start service
 	systemctl restart postgresql
 3. createdb
 	createdb -U postgres fsdb "main database for fusion splicer configuration"
+
+	#note: if you can't start postgresql service in some cases, e.g. installing
+	you can use following command to run postgresql under single user mode:
+	su -l postgres -c "cat /mnt/data/initdb.sql | postgres --single -D /mnt/data
+/database -j"
+
 4. rebuild template1
 	$ psql -U postgres postgres
 	update pg_database set datistemplate = false where datname='template1';
