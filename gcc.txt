@@ -1,0 +1,4 @@
+1. only link required function/data:
+  CFLAGS += -fdata-sections -ffunction-sections
+  CXXFLAGS += -fdata-sections -ffunction-sections
+  LDFLAGS += -Wl,--gc-sections
