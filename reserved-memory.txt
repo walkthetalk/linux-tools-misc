@@ -1,0 +1,9 @@
+memory = of_parse_phandle(dev->of_node, "memory-region", 0);
+if (!memory) {
+	return -ENODEV;
+}
+
+addr = of_translate_address(memory,
+		of_get_address(memory, 0, &memory_size, NULL));
+
+virt_addr = phys_to_virt(addr);
