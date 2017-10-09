@@ -2,6 +2,7 @@
 # autor: Ni Qingliang
 # NOTE: this script can be used to sync yocto repository which is accessed through
 #       http
+import operator
 import time
 import datetime
 import re
@@ -15,25 +16,25 @@ import fileinput
 
 # the `-N' option can make wget overwrite the old file
 def g_download(rem_file, loc_dir):
-	call("wget -N --timeout=10 --wait=10 --tries=0 --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
+	call("wget -e robots=off -N --timeout=10 --wait=10 --tries=0 --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
 class creg_file:
-	def __init__(self, parent, name, isregular):
+	def __init__(self, parent, fname, fsize, ftime, isregular):
 		self._parent = parent
-		self._name = name
+		self._name = fname
+		self._size = fsize
+		self._time = ftime
 		self._isregular = isregular
 
 	def need_dl(self):
 		file_path = self._parent.loc_dir() + self._name
 		if os.path.exists(file_path):
-			if self._isregular:
-				return False
+			ltime = time.gmtime(os.path.getmtime(file_path))
+			print(self._name + " local time: " + time.strftime("%Y-%b-%d %H:%M", ltime) + ", remote time: " + time.strftime("%Y-%b-%d %H:%M", self._time))
+			if operator.eq(ltime, self._time):
+				return True
 			else:
-				file_header_info = subprocess.check_output(["wget","--spider", self._parent.main_page() + self._name], stderr=subprocess.STDOUT, universal_newlines=True)
-				obj_size = re.sub(r'.*\nLength: ([0-9]+) \(.*', r'\1', file_header_info, flags=re.DOTALL)
-				# TODO: maybe we should use strict comparision, here just compare the size
-				if os.path.getsize(file_path) == (int)(obj_size):
-					return False
+				return False
 		return True
 	def download(self):
 		if self.need_dl():
@@ -60,10 +61,12 @@ class csub_rep:
 		prev_file = None
 		prev_pkg_name = ""
 		prev_pkg_ver = ""
-		for link in soup.html.body.table.tbody.find_all("a"):
+		for link in soup.html.body.table.tbody.find_all("tr", recursive=False):
 			#print(link["href"])
+			NNN = link.contents[0]
+			print("NNN: " + NNN.string)
 			#continue
-			file_name = link["href"].strip()
+			file_name = NNN.a["href"].strip()
 			#directory
 			if re.match(".*/$", file_name):
 				continue
@@ -75,18 +78,24 @@ class csub_rep:
 			if re.match(".*bad-checksum.*", file_name):
 				continue
 
+			SSS = link.contents[1]
+			TTT = link.contents[2]
+			print("SSS: " + SSS.string)
+			print("TTT: " + TTT.string.strip())
+			file_size = SSS.string.strip()
+			file_time = time.strptime(TTT.string.strip(), '%Y-%b-%d %H:%M')
 			# parse
 			self._fl_ordered.append(file_name)
 			if re.match(r"^.*"
 				"(_\.svn|\.trunk|svn\.)"
 				".*$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name, False)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_size, file_time, False)
 				continue
 			if re.match(r"^git[2]?_.*$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name, False)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_size, file_time, False)
 				continue
 			if re.match(r"^.*\.patch$", file_name):
-				self._fl_non_regular[file_name] = creg_file(self, file_name, True)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_size, file_time, True)
 				continue
 			m = re.match(r"^(?P<pkgname>.*)"
 				"(-|_|-s|\.v)"
@@ -97,7 +106,7 @@ class csub_rep:
 				"(?P<ext>tar\.bz2|tar\.gz|tar\.xz|tgz|zip|gz|bz2)"
 				"$", file_name)
 			if not m:
-				self._fl_non_regular[file_name] = creg_file(self, file_name, True)
+				self._fl_non_regular[file_name] = creg_file(self, file_name, file_size, file_time, True)
 				continue
 
 			# regular file
@@ -111,7 +120,7 @@ class csub_rep:
 				# update prev
 				prev_pkg_name = pkgname
 				prev_pkg_ver = pkgver
-				prev_file = creg_file(self, file_name, True)
+				prev_file = creg_file(self, file_name, file_size, file_time, True)
 
 			else: # same pkg
 				if prev_pkg_ver == pkgver:
@@ -126,7 +135,7 @@ class csub_rep:
 							continue
 						if pn < cn:
 							prev_pkg_ver = pkgver
-							prev_file = creg_file(self, file_name, True)
+							prev_file = creg_file(self, file_name, file_size, file_time, True)
 						break
 		# the final one
 		if prev_file:
