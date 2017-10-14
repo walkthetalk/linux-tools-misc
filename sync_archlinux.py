@@ -132,5 +132,5 @@ if __name__ == '__main__':
 
 	for repo in repos:
 		print("dling repo %s:" % (repo))
-		test = csub_rep(repo, "http://" + g_host + '/archlinux/' + repo + '/os/x86_64/', g_loc_base_dir + repo + "/os/x86_64/")
+		test = csub_rep(repo, "http://" + g_host + '/archlinux/' + repo + '/os/x86_64/', g_loc_base_dir + "/" + repo + "/os/x86_64/")
 		test.download()
