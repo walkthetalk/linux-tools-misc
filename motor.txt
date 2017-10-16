@@ -1,1 +1,2 @@
 http://users.ece.utexas.edu/~valvano/Datasheets/StepperSelection.pdf
+https://www.geckodrive.com/gecko/images/cms_files/Step%20Motor%20Basics%20Guide.pdf
