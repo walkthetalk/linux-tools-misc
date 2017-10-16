@@ -1,0 +1,1 @@
+http://users.ece.utexas.edu/~valvano/Datasheets/StepperSelection.pdf
