@@ -35,7 +35,7 @@ class creg_file:
 		if os.path.exists(file_path):
 			ltime = time.gmtime(os.path.getmtime(file_path))
 			print(self._name + " local time: " + time.strftime(g_timefmt, ltime) + ", remote time: " + time.strftime(g_timefmt, self._time))
-			if time.strftime(g_timefmt, ltime) == time.strftime(g_timefmt, self._time):
+			if time.strftime(g_timefmt, ltime) != time.strftime(g_timefmt, self._time):
 				return True
 			else:
 				return False
