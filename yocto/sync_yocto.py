@@ -18,6 +18,10 @@ import fileinput
 def g_download(rem_file, loc_dir):
 	call("wget -e robots=off -N --timeout=10 --wait=10 --tries=0 --progress=bar -P " + loc_dir + " " + rem_file, shell=True)
 
+g_STYLE = 1
+g_timefmtlist = [ "%Y-%b-%d %H:%M", "%Y-%b-%d"]
+g_timefmt = g_timefmtlist[g_STYLE]
+
 class creg_file:
 	def __init__(self, parent, fname, fsize, ftime, isregular):
 		self._parent = parent
@@ -30,8 +34,8 @@ class creg_file:
 		file_path = self._parent.loc_dir() + self._name
 		if os.path.exists(file_path):
 			ltime = time.gmtime(os.path.getmtime(file_path))
-			print(self._name + " local time: " + time.strftime("%Y-%b-%d %H:%M", ltime) + ", remote time: " + time.strftime("%Y-%b-%d %H:%M", self._time))
-			if operator.eq(ltime, self._time):
+			print(self._name + " local time: " + time.strftime(g_timefmt, ltime) + ", remote time: " + time.strftime(g_timefmt, self._time))
+			if time.strftime(g_timefmt, ltime) == time.strftime(g_timefmt, self._time):
 				return True
 			else:
 				return False
@@ -77,7 +81,7 @@ class csub_rep:
 			print("SSS: " + SSS.string)
 			print("TTT: " + TTT.string.strip())
 			file_size = SSS.string.strip()
-			file_time = time.strptime(TTT.string.strip(), '%Y-%b-%d %H:%M')
+			file_time = time.strptime(TTT.string.strip(), g_timefmtlist[0])
 			# parse
 			self._fl_ordered.append(file_name)
 			if re.match(r"^.*"
@@ -134,7 +138,7 @@ class csub_rep:
 		# the final one
 		if prev_file:
 			self._fl_regular[prev_file.name()] = prev_file
-	def __genlist2(self):
+	def __genlist1(self):
 		# get index
 		#call("wget --progress=bar -O " + "index.html" + " " + base_url, shell=True)  
 		fp = open("index.html")
@@ -144,11 +148,15 @@ class csub_rep:
 		prev_pkg_ver = ""
 		for cnt, line in enumerate(fp):
 			link = re.split(' +', line)
+			
+			if len(link) < 9:
+				continue
 
-			file_name = link[8]
+			file_name = link[8].rstrip()
 			file_size = link[4]
-			file_time = time.strptime(link[7] + '-' + link[5] + '-' + link[6] + ' 00:00', '%Y-%b-%d %H:%M')
 			#directory
+			if re.match("\..*", file_name):
+				continue
 			if re.match(".*/$", file_name):
 				continue
 			#done file
@@ -160,6 +168,12 @@ class csub_rep:
 				continue
 			if file_size == 0:
 				continue
+
+			#print(link)
+			if re.match(".*\:.*", link[7]):
+				file_time = time.strptime(time.strftime("%Y", time.gmtime()) + '-' + link[5] + '-' + link[6] + ' ' + link[7], g_timefmtlist[0])
+			else:
+				file_time = time.strptime(link[7] + '-' + link[5] + '-' + link[6], g_timefmtlist[1])
 
 			# parse
 			self._fl_ordered.append(file_name)
@@ -224,8 +238,11 @@ class csub_rep:
 		self._fl_dl = {}
 		self._fl_ordered = []
 		self._loc_dir = loc_dir
-		
-		self.__genlist2()
+
+		if g_STYLE == 0:
+			self.__genlist()
+		else:
+			self.__genlist1()
 		# remove files non't need dl in non-regular list
 		with fileinput.input(files=("yocto-nrfl-with-flag.lst")) as f:
 			for line in f:
