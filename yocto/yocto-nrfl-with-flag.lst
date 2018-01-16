@@ -547,9 +547,9 @@ git2_git.code.sf.net.p.trousers.tpm-tools.tar.gz
 git2_git.code.sf.net.p.trousers.trousers.tar.gz
 git2_git.debian.org.git.debian-eeepc.eeepc-acpi-scripts.git.tar.gz
 git2_git.denx.de.mxsldr.git.tar.gz
-git2_git.denx.de.u-boot.git.tar.gz
-git2_git.eclipse.org.gitroot.tcf.org.eclipse.tcf.agent.git.tar.gz
-git2_git.eclipse.org.gitroot.tcf.org.eclipse.tcf.agent.tar.gz
+#git2_git.denx.de.u-boot.git.tar.gz
+#git2_git.eclipse.org.gitroot.tcf.org.eclipse.tcf.agent.git.tar.gz
+#git2_git.eclipse.org.gitroot.tcf.org.eclipse.tcf.agent.tar.gz
 git2_git.efficios.com.babeltrace.git.tar.gz
 git2_git.fedorahosted.org.git.newt.tar.gz
 #git2_git.freescale.com.imx.linux-2.6-imx.git.tar.gz
