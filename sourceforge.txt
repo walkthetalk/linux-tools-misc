@@ -1,2 +1,5 @@
-download:
+sourceforge mirror:
 	http://www.mirrorservice.org/sites/download.sourceforge.net/pub/sourceforge/
+
+Big SW Download:
+	https://downloadly.win/
