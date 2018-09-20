@@ -3,6 +3,13 @@
 	pacman -S mariadb gitlab
 
 2. 创建数据库
+	先配置数据库 （gitlab 11 有特殊要求）/etc/mysql/my.cfg
+		innodb_large_prefix=ON
+		innodb_file_format=Barracuda
+		innodb_file_per_table=ON
+		log_bin_trust_function_creators=1
+		innodb_default_row_format=DYNAMIC
+
 	# systemctl start mysqld
 	# mysql -u root -p
 
@@ -109,3 +116,7 @@
 
 	关于 mirror 库不显示 tag 的问题：
 		sudo -u gitlab -s /bin/sh -c "cd '/usr/share/webapps/gitlab'; RAILS_ENV=production bundle-2.1 exec rake cache:clear"
+
+	如果启动 gitlab-unicorn 失败：
+		可能是 service 文件中 Protectsystem 导致，先移除此项待运行一次生成 secret 文件
+		后再还原回去即可。
