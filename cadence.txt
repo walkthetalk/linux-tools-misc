@@ -1,9 +1,14 @@
+# Windows version
+   如果安装文件位于ext分区，使用ext2fsd等访问，则执行setup.exe时可能碰到0x800704b3错误，此时请启动“WebClient”服务。
+
+
+# Linux version
 1. 依赖
-   1） community/tcsh
-   2） community/libpng12
-   3） multilib/lib32-libxtst
-   4） aur/ld-lsb
-   5） aur/ksh
+   1） tcsh
+   2） libpng12
+   3） lib32-libxtst
+   4） ld-lsb
+   5） ksh
 
 2. 無法啓動的問題
    症狀：[install_dir]/tools.lnx86/bin/allegro.exe: symbol lookup error: /usr/lib64/libXext.so.6: undefined symbol: _XGetRequest
@@ -18,14 +23,16 @@
    许可证路径：{ROOT_DIR}/share/license
    先用此目录下的 configure 配置许可证，然后启动 rc.lic
 
-   IMPORTANT: if you have multiple net adapter, please modify `lic_config', remove last sed of line345 'set linetype =',
+   IMPORTANT: 如果有多个网卡, lmhostid会返回多个mac地址。
+   1）修改lic_config，移除第345行'set linetype ='最后一个sed
+   2）修改lmhostid
       mv [ROOT_DIR]/tools.lnx86/bin/lmhostid [ROOT_DIR]/tools.lnx86/bin/lmhostid.bak
       touch [ROOT_DIR]/tools.lnx86/bin/lmhostid
-   edit it with following content:
-      #!/usr/bin/sh
-      SDIR=`dirname $0`
-      RET=`${SDIR}/lmhostid.bak $*`
-      echo "`echo $RET | cut -d ' ' -f 1`\""
+      然后编辑文件lmhostid:
+         #!/usr/bin/sh
+         SDIR=`dirname $0`
+         RET=`${SDIR}/lmhostid.bak $*`
+         echo "`echo $RET | cut -d ' ' -f 1`\""
 
    配置 license
    [ll@YiQingliang-PC license]$ ./configure
