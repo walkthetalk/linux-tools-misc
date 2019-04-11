@@ -4,10 +4,7 @@
 
 # Linux version
 1. 依赖
-   1） tcsh
-   2） libpng12
-   3） lib32-libxtst
-   4） ld-lsb
+   tcsh/libpng12/lib32-glibc/lib32-libxtst/ld-lsb
    5） ksh
 
 2. 無法啓動的問題
