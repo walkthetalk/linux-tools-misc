@@ -1,24 +1,25 @@
 1. 依赖
    1） community/tcsh
-   2） multilib/lib32-libxtst
-   3） aur/ld-lsb
-   4） aur/ksh
-   注意：在编译 ksh 之前要修改 PKGBUILD，填上用户名密码，具体内容请查看如下网页底部：
-      http://www2.research.att.com/~astopen/download/licenses/epl-1.0.html
-   附用户名密码：
-   User Name:
-      I accept www.opensource.org/licenses/eclipse
-   Password:
-      .
+   2） community/libpng12
+   3） multilib/lib32-libxtst
+   4） aur/ld-lsb
+   5） aur/ksh
 
 2. 無法啓動的問題
-   症狀：/opt/cadence/tools.lnx86/bin/allegro.exe: symbol lookup error: /usr/lib64/libXext.so.6: undefined symbol: _XGetRequest
-   解決辦法：
-   如果是64位的，使用/usr/lib64/libX11.so.6.3.0 覆盖掉安装目录下的tools/mainwin540/mw/lib-amd64_linux/X11下的libX11.so.6.3.0即可。32位的请自行找对应的文件和目录
+   症狀：[install_dir]/tools.lnx86/bin/allegro.exe: symbol lookup error: /usr/lib64/libXext.so.6: undefined symbol: _XGetRequest
+   解決辦法：如果是64位的，使用/usr/lib64/libX11.so.6.3.0 覆盖掉安装目录下的tools/mainwin540/mw/lib-amd64_linux/X11下的libX11.so.6.3.0即可。32位的请自行找对应的文件和目录
+   ln -sf /usr/lib/libX11.so [install_dir]/tools/mainwin540/mw/lib-amd64_linux/X11/libX11.so.6.3.0
+   ln -sf /usr/lib/libstdc++.so tools.lnx86/lib/64bit/libstdc++.so.6
+   ln -sf /usr/lib/libxcb.so ./libxcb.so.1.1.0
+   ln -sf /usr/lib/libXau.so ./libXau.so.6.0.0
+   ln -sf /usr/lib/libX11-xcb.so ./libX11-xcb.so.1.0.0
 
 3. 路径说明
    许可证路径：{ROOT_DIR}/share/license
    先用此目录下的 configure 配置许可证，然后启动 rc.lic
+   IMPORTANT: if you have multiple net adapter, please modify `lic_config' like that:
+       set this_hostid = `$tools_bin/lmhostid -n`
+       set this_hostid = `$tools_bin/lmhostid -n | cut -d ' ' -f 1 | cut -d '"' -f 2`
 
    配置 license
    [ll@YiQingliang-PC license]$ ./configure
