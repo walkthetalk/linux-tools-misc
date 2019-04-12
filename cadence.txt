@@ -4,25 +4,21 @@
 
 # Linux version
 1. 依赖
+   lib32-gcc-libs: patch工具，cadence本身程序均需要
    tcsh/libpng12/lib32-glibc/lib32-libxtst/ld-lsb
-   5） ksh
 
-2. 無法啓動的問題
-   症狀：[install_dir]/tools.lnx86/bin/allegro.exe: symbol lookup error: /usr/lib64/libXext.so.6: undefined symbol: _XGetRequest
-   解決辦法：如果是64位的，使用/usr/lib64/libX11.so.6.3.0 覆盖掉安装目录下的tools/mainwin540/mw/lib-amd64_linux/X11下的libX11.so.6.3.0即可。32位的请自行找对应的文件和目录
-   ln -sf /usr/lib/libX11.so [install_dir]/tools/mainwin540/mw/lib-amd64_linux/X11/libX11.so.6.3.0
-   ln -sf /usr/lib/libstdc++.so tools.lnx86/lib/64bit/libstdc++.so.6
-   ln -sf /usr/lib/libxcb.so ./libxcb.so.1.1.0
-   ln -sf /usr/lib/libXau.so ./libXau.so.6.0.0
-   ln -sf /usr/lib/libX11-xcb.so ./libX11-xcb.so.1.0.0
+2. 打patch
+   1) patch工具需要安装：lib32-gcc-libs
+   2) cd Crack/Patch/; ./cadence_patch.sh [install_dir]
 
 3. 路径说明
    许可证路径：{ROOT_DIR}/share/license
+   1) cp Crack/License/license.dat [install_dir]/share/license/
+   2) 如果lmhostid运行出错，可能缺少linux-gate.so.1
+
    先用此目录下的 configure 配置许可证，然后启动 rc.lic
 
-   IMPORTANT: 如果有多个网卡, lmhostid会返回多个mac地址。
-   1）修改lic_config，移除第345行'set linetype ='最后一个sed
-   2）修改lmhostid
+   2) 如果有多个网卡, lmhostid会返回多个mac地址，请修改lmhostid
       mv [ROOT_DIR]/tools.lnx86/bin/lmhostid [ROOT_DIR]/tools.lnx86/bin/lmhostid.bak
       touch [ROOT_DIR]/tools.lnx86/bin/lmhostid
       然后编辑文件lmhostid:
@@ -30,8 +26,9 @@
          SDIR=`dirname $0`
          RET=`${SDIR}/lmhostid.bak $*`
          echo "`echo $RET | cut -d ' ' -f 1`\""
+      如果lmhostid无法启动，请检查/usr/lib/ld-lsb.so.*，如有必要，请重新安装ld-lsb
 
-   配置 license
+   3) 配置 license
    [ll@YiQingliang-PC license]$ ./configure
 
 		Do you want to configure licensing? <y/n> [n] -> y
@@ -95,7 +92,12 @@
 
 
 4. 启动
-   csh -c "source {ROOT_DIR}/tools/pcb/bin/cshrc; allegro"
+   1) 处理libstdc++版本问题：
+      cd [install_dir]/tools.lnx86/lib/64bit
+      mkdir bak
+      mv libstdc++* ./bak/
+   2) 启动
+      csh -c "source {ROOT_DIR}/tools/pcb/bin/cshrc; allegro"
 
 5. 卡的问题
    在 /etc/hosts 最开始加一条本机名（严格来讲应该是 license.lic 中的主机名），指向 127.0.0.1 即可
