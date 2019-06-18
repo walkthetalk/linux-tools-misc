@@ -1,2 +1,8 @@
 download from:
 https://download.qt.io/official_releases/qt/
+
+mirror:
+http://mirrors.ustc.edu.cn/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
+http://mirrors.geekpie.club/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
+http://mirrors.tuna.tsinghua.edu.cn/qt/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
+http://mirror.bit.edu.cn/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
