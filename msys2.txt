@@ -16,3 +16,8 @@ msys64\etc\pacman.d:
     Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64/
   mirrorlist.mingw32
     Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686/
+
+add git in /etc/pacman.conf:
+  [git-for-windows]
+  Server = https://wingit.blob.core.windows.net/x86-64
+the msys2 use Windows env %HOME%, so maybe we need change it by set env when starting msys.
