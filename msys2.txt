@@ -2,7 +2,14 @@ download installer:
 http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20190524.exe
 
 add repo:
-msys64\etc\pacman.d: 
+msys64\etc\pacman.d:
+  /etc/pacman.d/mirrorlist.mingw32：
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
+  /etc/pacman.d/mirrorlist.mingw64：
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
+  /etc/pacman.d/mirrorlist.msys：
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
+
   mirrorlist.msys
     Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
   mirrorlist.mingw64
