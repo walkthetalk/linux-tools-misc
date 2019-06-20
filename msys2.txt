@@ -1,23 +1,30 @@
-download installer:
+1. download installer:
 http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20190524.exe
 
-add repo:
-msys64\etc\pacman.d:
-  /etc/pacman.d/mirrorlist.mingw32：
+2. add repo:
+directory: msys64\etc\pacman.d, add following content in the begin of every file.
+  file: /etc/pacman.d/mirrorlist.mingw32：
     Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
-  /etc/pacman.d/mirrorlist.mingw64：
+  file: /etc/pacman.d/mirrorlist.mingw64：
     Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
-  /etc/pacman.d/mirrorlist.msys：
+  file: /etc/pacman.d/mirrorlist.msys：
     Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
 
-  mirrorlist.msys
+  file: mirrorlist.msys
     Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
-  mirrorlist.mingw64
+  file: mirrorlist.mingw64
     Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64/
-  mirrorlist.mingw32
+  file: mirrorlist.mingw32
     Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686/
 
-add git in /etc/pacman.conf:
+3. add git
+
+3.1 add following content to /etc/pacman.conf:
   [git-for-windows]
+  SigLevel = Optional TrustAll
   Server = https://wingit.blob.core.windows.net/x86-64
-the msys2 use Windows env %HOME%, so maybe we need change it by set env when starting msys.
+NOTE: the msys2 use Windows env %HOME%, so maybe we need change it by set env when starting msys.
+
+3.2 update and installl git
+  pacman -Sy
+  pacman -S mingw-w64-x86_64-git
