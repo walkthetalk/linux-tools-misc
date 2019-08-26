@@ -1,1 +1,8 @@
 https://www.lulinux.com/archives/1319
+
+1. pacman.conf
+[archlinuxcn]
+SigLevel = Never
+Server = http://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+
+5，安装好的TIM打不开：如果是Arch系KDE/Plasma桌面，请按照这个教程，先安装gnome-settings-daemon，然后将/usr/lib/gsd-xsettings设置为自动启动；如果是Ubuntu系KDE桌面，原理相同，但程序名称可能是/usr/lib/gnome-settings-daemon/gsd-xsettings，请自行探索；如果是Gnome/Cinnamon/MATE/Budgie/deepin/LXDE/XFCE/Ubuntu/UKUI等桌面环境和WM，请稍等片刻，或多点击菜单图标一次。
