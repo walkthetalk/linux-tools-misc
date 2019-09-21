@@ -23,6 +23,8 @@ g_cmptimefmt = "%Y-%b-%d"
 g_splitReg = re.compile("^<a href=\"([^>\"]+)\">[^</]+</a> +([^ ]+) ([^ ]+) +([1-9][0-9]*)$")
 g_list_file = "files.lst"
 g_html_file = "index.html"
+g_loc_dir = './sources.yoctoproject/'
+g_deprecated_dir = "./sources.deprecated/"
 
 # https://stackoverflow.com/questions/4836710/does-python-have-a-built-in-function-for-string-natural-sort
 def natural_sorted(iterable, key=None, reverse=False):
@@ -147,16 +149,16 @@ class csub_rep:
 		cur_files = os.listdir(self._loc_dir)
 		for i in cur_files:
 			if (not (i in self._full_fl)) or (not self._full_fl[i].get_need()):
-				print("rming {}".format(i))
+				#print("mv " + self._loc_dir + i + " " + g_deprecated_dir)
+				call("mv " + self._loc_dir + i + " " + g_deprecated_dir)
 				os.remove(self._loc_dir + i)
 
 		return
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
-	loc_dir = './sources.yoctoproject/'
 	#call("wget --progress=bar -O " + g_html_file + " " + base_url, shell=True)
-	test = csub_rep(base_url, loc_dir)
+	test = csub_rep(base_url, g_loc_dir)
 	test.download()
 	test.save()
 	test.rm_old_files()
