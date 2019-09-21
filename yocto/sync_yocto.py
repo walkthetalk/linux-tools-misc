@@ -130,6 +130,8 @@ class csub_rep:
 			os.makedirs(self._loc_dir)
 	def loc_dir(self):
 		return self._loc_dir
+	def main_page(self):
+		return self._main_page
 
 	def download(self):
 		for (k, v) in natural_sorted(self._full_fl.items()):
