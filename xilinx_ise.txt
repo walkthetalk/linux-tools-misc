@@ -8,7 +8,7 @@ or we can't generate ip core normally.
 VIVADO:
 1. before 2016.3, and on ArchLinux 64bit, we should change the 'uname -i' to 'uname -m' in 'xsetup', and ${INSTALL_DIR}/.xinstall/Vivado_2016.2/xsetup after install.
 
-2. libcurses:
+2. libcurses, need install 'ncurses5-compat-libs' from aur, or:
 	cd /usr/lib
 	sudo cp libncursesw.so.6.0 libncurses.so.5
 3. font:
