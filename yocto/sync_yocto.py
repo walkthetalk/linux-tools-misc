@@ -2,6 +2,8 @@
 # autor: Ni Qingliang
 # NOTE: this script can be used to sync yocto repository which is accessed through
 #       http
+import tkinter
+
 import operator
 import time
 import datetime
@@ -24,6 +26,7 @@ g_html_file = "index.html"
 g_loc_dir = './sources.yoctoproject/'
 g_new_dir = './sources.new/'
 g_deprecated_dir = "./sources.deprecated/"
+g_updated_dir = "./sources.updated/"
 g_thread_number = 10
 
 # the `-N' option can make wget overwrite the old file
@@ -76,12 +79,16 @@ class creg_file:
 		self._size = fsize
 		self._time = ftime
 		self._need = False
+		self._need_dl = False
 	def set_need(self, isNeed):
 		self._need = isNeed
+		self._need_dl = self.__need_dl()
 	def get_need(self):
 		return self._need
+	def get_need_dl(self):
+		return self._need_dl
 
-	def need_dl(self):
+	def __need_dl(self):
 		if not self.get_need():
 			return False
 		file_path = self._parent.loc_dir() + self._name
@@ -91,27 +98,16 @@ class creg_file:
 			os.remove(file_path + ".st")
 		if os.path.exists(file_path):
 			statinfo = os.stat(file_path)
-			if (statinfo.st_size == self._size) and (time.gmtime(statinfo.st_mtime) >= self._time):
+			if (statinfo.st_size == self._size):
+				# and (time.gmtime(statinfo.st_mtime) >= self._time):
 				return False
-			#print("need dl " + self._name)
-			#print("local size: ")
-			#print(statinfo.st_size)
-			#print("remote size: ")
-			#print(self._size)
-			#print(statinfo.st_size == self._size)
 			#print("local time: ")
 			#print(time.gmtime(statinfo.st_mtime))
 			#print("remote time: ")
 			#print(self._time)
 			#print(time.gmtime(statinfo.st_mtime) >= self._time)
+			call("mv " + file_path + " " + g_updated_dir, shell=True)
 		return True
-	def download(self):
-		if self.need_dl():
-			#print("downloading {}".format(self._name))
-			g_download(self._parent.main_page() + self._name, self._parent.loc_dir())
-		#else:
-		#	print("{:<50} skip".format(self._name))
-		return
 
 	def name(self):
 		return self._name
@@ -143,29 +139,12 @@ class csub_rep:
 		self._full_fl = {}
 		self.__genlist()
 
-		# remove files non't need dl in non-regular list
-		with fileinput.input(files=(g_list_file)) as f:
-			for line in f:
-				m = re.match("([+-])(.*)", line)
-				if m:
-					if m.group(1) == "+" and m.group(2) in self._full_fl:
-						self._full_fl[m.group(2)].set_need(True)
-
-		self._dl_fl = {}
-		for (k,v) in natural_sorted(self._full_fl.items()):
-			if v.need_dl():
-				self._dl_fl[k] = v
-
-		# create locale directory
-		if not os.path.exists(self._loc_dir):
-			os.makedirs(self._loc_dir)
-
 	def loc_dir(self):
 		return self._loc_dir
 	def main_page(self):
 		return self._main_page
 
-	def download(self):
+	def prepare_for_run(self):
 		self._queue = Queue(len(self._dl_fl))
 		for (k, v) in natural_sorted(self._dl_fl.items()):
 			self._queue.put(self.main_page() + k)
@@ -200,12 +179,57 @@ class csub_rep:
 				#os.remove(self._loc_dir + i)
 
 		return
+	def gen_cb_list(self, par):
+		last_settings = {}
+		with fileinput.input(files=(g_list_file)) as f:
+			for line in f:
+				m = re.match("([+-])(.*)", line)
+				if m:
+					if m.group(1) == "+":
+						last_settings[m.group(2)] = True
+					elif m.group(1) == "-":
+						last_settings[m.group(2)] = False
+
+		for (k, v) in natural_sorted(self._full_fl.items()):
+			if (k in last_settings):# old file
+				if last_settings[k]:
+					par.insert(tkinter.END, k)
+					par.selection_set(tkinter.END)
+			else:#new file
+				par.insert(tkinter.END, k)
+	def process_need_list(self, par):
+		for i in par.curselection():
+			self._full_fl[par.get(i)].set_need(True)
+
+		# generate download list
+		self._dl_fl = {}
+		for (k,v) in natural_sorted(self._full_fl.items()):
+			if v.get_need_dl():
+				print("need dl: " + k)
+				self._dl_fl[k] = v
+
+		# create locale directory
+		if not os.path.exists(self._loc_dir):
+			os.makedirs(self._loc_dir)
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
 	#call("wget --progress=bar -O " + g_html_file + " " + base_url, shell=True)
 	test = csub_rep(base_url, g_loc_dir)
-	test.download()
+
+	# edit
+	win = tkinter.Tk()
+	listbox = tkinter.Listbox(win, selectmode="multiple", height=40,width=100)
+	test.gen_cb_list(listbox)
+	listbox.pack()
+	win.protocol("WM_DELETE_WINDOW", lambda : (
+		      test.process_need_list(listbox),
+		      win.destroy()
+		      ))
+	win.mainloop()
+
+	# download
+	test.prepare_for_run()
 
 	threadList = []
 	for i in range(0, g_thread_number):
