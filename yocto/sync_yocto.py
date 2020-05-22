@@ -214,7 +214,7 @@ class csub_rep:
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
-	#call("wget --progress=bar -O " + g_html_file + " " + base_url, shell=True)
+	call("wget --progress=bar -O " + g_html_file + " " + base_url, shell=True)
 	test = csub_rep(base_url, g_loc_dir)
 
 	# edit
