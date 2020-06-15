@@ -20,7 +20,12 @@ from subprocess import call
 import fileinput
 import urllib.parse
 
-g_splitReg = re.compile("^<a href=\"([^>\"]+)\">[^</]+</a> +([^ ]+) ([^ ]+) +([1-9][0-9]*)$")
+g_splitReg = re.compile(
+	"^<tr>"
+	+ "<td class=\"link\"><a href=\"([^\"]+)\" title=\"[^\"]+\">[^</]+</a></td>"
+	+ "<td class=\"size\">([^<]+)</td>"
+	+ "<td class=\"date\">([^<]+)</td>"
+	+ "</tr>$")
 g_list_file = "files.lst"
 g_html_file = "index.html"
 g_loc_dir = './sources.yoctoproject/'
@@ -98,9 +103,10 @@ class creg_file:
 			os.remove(file_path + ".st")
 		if os.path.exists(file_path):
 			statinfo = os.stat(file_path)
-			if (statinfo.st_size == self._size):
-				# and (time.gmtime(statinfo.st_mtime) >= self._time):
-				return False
+			#if (statinfo.st_size == self._size):
+			#	and (time.gmtime(statinfo.st_mtime) >= self._time):
+			#	return False
+			return False
 			#print("local time: ")
 			#print(time.gmtime(statinfo.st_mtime))
 			#print("remote time: ")
@@ -120,7 +126,7 @@ class csub_rep:
 			splitR = g_splitReg.match(line)
 			if not splitR:
 				continue
-			#for i in [1, 2, 3, 4]:
+			#for i in [1, 2, 3]:
 			#	print("{}: {}".format(i, splitR.group(i)))
 
 			file_name = urllib.parse.unquote(splitR.group(1))
@@ -128,8 +134,8 @@ class csub_rep:
 				continue
 			if re.match("^git2_tmp.*", file_name):
 				continue
-			file_size = int(splitR.group(4))
-			file_time = time.strptime(splitR.group(2) + " " + splitR.group(3), "%d-%b-%Y %H:%M")
+			file_size = splitR.group(2)
+			file_time = time.strptime(splitR.group(3), "%Y-%b-%d %H:%M")
 
 			self._full_fl[file_name] = creg_file(self, file_name, file_size, file_time)
 	def __init__(self, base_url, loc_dir):
