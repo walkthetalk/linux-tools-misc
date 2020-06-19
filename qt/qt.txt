@@ -6,3 +6,12 @@ http://mirrors.ustc.edu.cn/qtproject/archive/qt/5.12/5.12.4/qt-opensource-window
 http://mirrors.geekpie.club/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
 http://mirrors.tuna.tsinghua.edu.cn/qt/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
 http://mirror.bit.edu.cn/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
+
+1. qtcreator
+	g++ error: CreateProcess: no such file or directory.
+	make -jx failed to create process, anti-virus blocked that which result in timeout.
+2. flicker (fullscreen)
+	https://bugreports.qt.io/browse/QTBUG-55185
+	QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+3. Visual Studio can't parse Qt header files, remove directory:
+	C:\Users\<user>\AppData\Local\QtMsBuild
