@@ -1,11 +1,21 @@
 download from:
 https://download.qt.io/official_releases/qt/
 
-mirror:
-http://mirrors.ustc.edu.cn/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
-http://mirrors.geekpie.club/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
-http://mirrors.tuna.tsinghua.edu.cn/qt/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
-http://mirror.bit.edu.cn/qtproject/archive/qt/5.12/5.12.4/qt-opensource-windows-x86-5.12.4.exe
+1) tool:
+https://github.com/miurahr/aqtinstall.git
+2) modify 'installer.py':
+    def retrieve_archive(self, package: QtPackage):
+        archive = package.archive
+        url = package.url
+        newurl = re.sub(r'https://[^/]+/', "http://mirrors.ustc.edu.cn/qtproject/", url)
+        self.logger.info("oldurl is: {}".format(url))
+        self.logger.info("newurl is: {}".format(newurl))
+        url = newurl
+3) command:
+	aqt install --outputdir d:\qt 5.15.0 windows desktop win64_msvc2019_64
+4) visual studio problem:
+	devenv /resetuserdata
+	devenv /resetsettings
 
 1. qtcreator
 	g++ error: CreateProcess: no such file or directory.
