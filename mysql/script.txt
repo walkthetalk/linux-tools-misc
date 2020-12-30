@@ -1,0 +1,93 @@
+cd MySQL
+bin\mysqld.exe
+
+mysqldump.exe --hex-blob -uroot -p -B robotdb64 > ..\robotdb64.sql
+
+cd mysql-8.0.21-winx64\bin
+mysqld --initialize
+
+mysqld --defaults-file="my.ini"
+
+mysql -uroot -p < ..\robotdb64.sql
+
+mysql -uroot -p robotdb64
+
+or
+
+mysqlsh
+\connect root@localhost:33060/robotdb64
+shell.options.set('resultFormat', 'json/array')
+session.sql("show full tables")
+
+session.sql("describe autocalculateinfo")
+session.sql("describe bonescrewinfo")
+session.sql("describe imageinfo")
+session.sql("describe imageinfothreed")
+session.sql("describe operationinfo")
+session.sql("describe postoperationimginfo")
+session.sql("describe seriesinfo")
+session.sql("describe studyinfo")
+session.sql("describe summaryinfo")
+session.sql("describe userinfo")
+session.sql("describe vectorinfo")
+session.sql("describe warninginfo")
+
+or
+
+\sql
+
+
+drop procedure if exists dump_imageinfo;
+delimiter //
+  create procedure dump_image()
+  begin
+    declare v_operationnumb int;
+    declare v_imagetype varchar(100);
+    declare v_ext varchar(100);
+	DECLARE done BOOLEAN DEFAULT FALSE;
+    declare cur1 cursor for select operationnumb,imagetype,imageextension from imageinfo;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    open cur1;
+      read_loop: loop
+        fetch cur1 into v_operationnumb,v_imagetype,v_ext;
+		IF done THEN
+			LEAVE read_loop;
+		END IF;
+		select concat(v_operationnumb, v_imagetype) as '';
+        set @query = concat('select imagedata from imageinfo where operationnumb=', 
+            v_operationnumb, ' and imagetype="', v_imagetype, '" into dumpfile "', v_operationnumb, '-', v_imagetype, '.', v_ext, '"');
+        prepare write_file from @query;
+        execute write_file;
+      end loop;
+    close cur1;
+  end; //
+delimiter ;
+call dump_imageinfo();
+
+
+drop procedure if exists dump_imageinfothreed;
+delimiter //
+  create procedure dump_image()
+  begin
+    declare v_operationnumb int;
+    declare v_imagetype varchar(100);
+    declare v_ext varchar(100);
+	DECLARE done BOOLEAN DEFAULT FALSE;
+    declare cur1 cursor for select operationnumb,imagetype,imageextension from imageinfo;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    open cur1;
+      read_loop: loop
+        fetch cur1 into v_operationnumb,v_imagetype,v_ext;
+		IF done THEN
+			LEAVE read_loop;
+		END IF;
+		select concat(v_operationnumb, v_imagetype) as '';
+        set @query = concat('select imagedata from imageinfo where operationnumb=', 
+            v_operationnumb, ' and imagetype="', v_imagetype, '" into dumpfile "', v_operationnumb, '-', v_imagetype, '.', v_ext, '"');
+        prepare write_file from @query;
+        execute write_file;
+      end loop;
+    close cur1;
+  end; //
+delimiter ;
+call dump_imageinfothreed();
