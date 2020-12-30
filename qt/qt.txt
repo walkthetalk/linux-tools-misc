@@ -13,9 +13,10 @@ https://github.com/miurahr/aqtinstall.git
         url = newurl
 3) command:
 	aqt install --outputdir d:\qt 5.15.0 windows desktop win64_msvc2019_64
-4) visual studio problem:
-	devenv /resetuserdata
-	devenv /resetsettings
+	aqt tool windows tools_qtcreator 4.12.3 qt.tools.qtcreator
+
+http://mirrors.ustc.edu.cn/qtproject/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/
+http://mirrors.ustc.edu.cn/qtproject/online/qtsdkrepository/windows_x86/desktop/tools_ifw/qt.tools.ifw.32/
 
 1. qtcreator
 	g++ error: CreateProcess: no such file or directory.
@@ -35,3 +36,4 @@ https://github.com/miurahr/aqtinstall.git
 	https://forum.qt.io/topic/76023/applicationwindow-font-not-changed-by-qguiapplication-setfont
 5. FolderListModel in labs, parent of 'file:///C:/' is empty, we can use QDir::drives() to get drive list.
 6. use JsonObject agains JsonArray: JsonArray will be translated to child ListModel when used as ListItem.
+7. on Windows, if you hide files (set hide attribute) in plugins, it will report error when startup.
