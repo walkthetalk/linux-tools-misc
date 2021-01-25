@@ -1,0 +1,14 @@
+	devenv /resetuserdata
+	devenv /resetsettings
+
+https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-enterprise?view=vs-2019
+https://aka.ms/powertoysDetectedElevatedHelp
+
+对于 .NET Web 和.NET 桌面开发，请运行：
+vs_professional.exe --layout c:\vslayout --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb --add Component.GitHub.VisualStudio --includeOptional --lang en-US
+对于 .NET 桌面和 Office 开发，请运行：
+vs_professional.exe --layout c:\vslayout --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.Office --includeOptional --lang en-US
+对于 C++ 桌面开发，请运行：
+vs_professional.exe --layout c:\vslayout --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --lang en-US --lang zh-CN --lang zh-TW
+完整：
+vs_professional.exe --layout c:\vslayout --lang en-US

@@ -1,0 +1,8 @@
+MDIR=''
+${MDIR}/5.15.0/mingw81_64/bin/qtenv2.bat
+${MDIR}/Tools/QtCreator/share/qtcreator/QtProject/QtCreator.ini
+${MDIR}/Tools/QtCreator/share/qtcreator/QtProject/qtcreator/android.xml
+${MDIR}/Tools/QtCreator/share/qtcreator/QtProject/qtcreator/debuggers.xml
+${MDIR}/Tools/QtCreator/share/qtcreator/QtProject/qtcreator/qtversion.xml
+${MDIR}/Tools/QtCreator/share/qtcreator/QtProject/qtcreator/toolchains.xml
+${MDIR}/InstallationLog.txt

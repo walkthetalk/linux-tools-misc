@@ -1,6 +1,16 @@
 download from:
 https://download.qt.io/official_releases/qt/
 
+1) fiddle
+https://downloads.getfiddler.com/win/Fiddler%20Everywhere%201.5.0.exe
+
+2) select ’stream' mode, and input:
+urlreplace download.qt.io mirrors.tuna.tsinghua.edu.cn/qt
+or
+urlreplace download.qt.io mirrors.ustc.edu.cn/qtproject
+
+3) open maintain tool, install qt. good luck!
+
 1) tool:
 https://github.com/miurahr/aqtinstall.git
 2) modify 'installer.py':
