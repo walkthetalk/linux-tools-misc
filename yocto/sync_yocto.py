@@ -106,7 +106,8 @@ class creg_file:
 			#if (statinfo.st_size == self._size):
 			#	and (time.gmtime(statinfo.st_mtime) >= self._time):
 			#	return False
-			return False
+			if (time.gmtime(statinfo.st_mtime) < self._time):
+				return False
 			#print("local time: ")
 			#print(time.gmtime(statinfo.st_mtime))
 			#print("remote time: ")
