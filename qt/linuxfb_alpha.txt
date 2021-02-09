@@ -1,0 +1,18 @@
+0. qt application setting:
+	QT_QPA_PLATFORM=linuxfb
+	QT_QPA_FONTDIR=/usr/share/fonts/truetype
+	QT_QPA_GENERIC_PLUGINS=evdevtablet,evdevmouse,evdevtouch
+1. linux framebuffer setting:
+	framebuffer0 {
+		compatible = "simple-framebuffer";
+		width = <480>;
+		height = <272>;
+		stride = <(480 * 4)>;
+		format = "x8r8g8b8";
+	};
+    must use 'x8r8g8b8' against 'a8r8g8b8'
+
+2. qml setting:
+	ApplicationWindow {
+		color: "transparent"
+	}

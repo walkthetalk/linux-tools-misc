@@ -1,0 +1,9 @@
+1. boot slow
+[    3.178864] random: systemd: uninitialized urandom read (16 bytes read)
+......
+[  202.863047] random: crng init done
+[  202.866457] random: 7 urandom warning(s) missed due to ratelimiting
+
+https://bugs.archlinux.org/task/63738
+https://wiki.archlinux.org/index.php/Haveged
+random.trust_cpu=on 
