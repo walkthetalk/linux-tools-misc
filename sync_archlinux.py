@@ -32,6 +32,7 @@ class csub_rep:
 		tmp_dir = tempfile.mkdtemp(prefix="syncarch_") + "/"
 		call("wget --progress=bar"
 			+ " -O index.html"
+                        + " --timeout=60"
 			+ " -P " + tmp_dir
 			+ " " + self._main_page, shell=True)
 		soup = BeautifulSoup(open("index.html"), "html.parser")
@@ -79,16 +80,13 @@ class csub_rep:
 		# abs list
 		self.__abs_list = []
 		for i in (
-			".abs.tar.gz",
 			".db",
 			".db.tar.gz",
 			".db.tar.gz.old",
 			".files",
 			".files.tar.gz",
-			".files.tar.gz.old"):
-			# multilib 没有 abs.tar.gz
-			if (i == ".abs.tar.gz" and self._repo_name == "multilib"):
-				continue
+			".files.tar.gz.old",
+			".links.tar.gz"):
 			self.__abs_list.append(self._repo_name + i)
 
 	def download(self):
@@ -96,7 +94,14 @@ class csub_rep:
 		dl_list.sort()
 		for i in dl_list:
 			print("dling " + i)
-			call("wget -N --progress=bar -P " + self._loc_dir + " " + self._main_page + i, shell=True)
+			#call("wget -N --progress=bar -P " + self._loc_dir + " " + self._main_page + i, shell=True)
+			cmd = "axel " \
+				+ "-n " + "32" + " " \
+				+ "-a -v " \
+				+ "-U " + "'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1 Safari/605.1.15'" + " " \
+				+ "-o '" + self._loc_dir + "' " \
+				+ self._main_page + i
+			call(cmd, shell=True)
 
 		if len(dl_list) != 0:
 			abs_names = self.__abs_list
@@ -112,6 +117,8 @@ class csub_rep:
 
 			# check if we got right file lists
 			tmp_list = list(set(self.__abs_list) - set(self._fl_new))
+			for i in tmp_list:
+				print("check for right file lists: " + self._repo_name + ": " + i)
 			if len(tmp_list) != 0:
 				print("error for " + self._repo_name + ": can't remove for error index.")
 				return
@@ -119,7 +126,7 @@ class csub_rep:
 			# remove old files
 			for i in (set(self._fl_old) - set(self._fl_new)):
 				print("rming " + i)
-				#os.remove(self._loc_dir + i)
+				os.remove(self._loc_dir + i)
 
 if __name__ == '__main__':
 	repos = ["core",
