@@ -1,0 +1,64 @@
+1. pacman -S nginx mariadb php-fpm
+
+2. /etc/nginx/nginx.conf
+   add line 'include sites-enabled/*;' in http block.
+mkdir /etc/nginx/sites-enabled
+touch /etc/nginx/sites-enabled/wordpress.com
+
+server {
+    listen       80;
+    server_name  localhost;
+
+    charset utf-8;
+
+    #access_log  logs/host.access.log  main;
+
+    root /usr/share/webapps/wordpress;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location ~ \.php$ {
+        include        fastcgi_params;
+        fastcgi_intercept_errors on;
+        fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+            expires max;
+            log_not_found off;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    location ~ /\.ht {
+        deny  all;
+    }
+}
+
+5. /etc/php/php.ini
+extension=pdo_mysql
+extension=mysqli
+
+6. systemctl enable php-fpm nginx mysql
+systemctl start php-fpm nginx mysql
+
+7. mysql -u root -p
+CREATE DATABASE wordpress;
+GRANT ALL PRIVILEGES ON wordpress.* TO "ll"@"localhost" IDENTIFIED BY "ll";
+FLUSH PRIVILEGES;
+EXIT;
+
+8. chown http:http -R /usr/share/webapps/wordpress
