@@ -1,5 +1,7 @@
-sourceforge mirror:
+[deprecated] sourceforge mirror:
 	http://www.mirrorservice.org/sites/download.sourceforge.net/pub/sourceforge/
 
+	subst https://nchc.dl.sourceforge.net/
+	with  https://liquidtelecom.dl.sourceforge.net/
 Big SW Download:
 	https://downloadly.win/
