@@ -106,7 +106,9 @@ class creg_file:
 			#if (statinfo.st_size == self._size):
 			#	and (time.gmtime(statinfo.st_mtime) >= self._time):
 			#	return False
-			if (time.gmtime(statinfo.st_mtime) < self._time):
+			#if not re.match("^git2_.*", self._name):
+			#	return False
+			if (time.gmtime(statinfo.st_mtime) >= self._time):
 				return False
 			#print("local time: ")
 			#print(time.gmtime(statinfo.st_mtime))
@@ -237,7 +239,6 @@ if __name__ == '__main__':
 
 	# download
 	test.prepare_for_run()
-
 	threadList = []
 	for i in range(0, g_thread_number):
 		tmp = threading.Thread(target = test.run, args = [i])
@@ -245,6 +246,9 @@ if __name__ == '__main__':
 		threadList.append(tmp)
 	for i in range(0, g_thread_number):
 		threadList[i].join()
+
+	# save
 	test.save()
+	# remove old
 	test.rm_old_files()
 	call("rm ./sources/*; find sources.yoctoproject/ sources.custom/ -type f -exec ln -sf ../{} ./sources/ \\;", shell=True)
