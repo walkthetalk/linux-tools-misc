@@ -20,12 +20,18 @@ from subprocess import call
 import fileinput
 import urllib.parse
 
+#g_splitReg = re.compile(
+#	"^<tr>"
+#	+ "<td class=\"link\"><a href=\"([^\"]+)\" title=\"[^\"]+\">[^</]+</a></td>"
+#	+ "<td class=\"size\">([^<]+)</td>"
+#	+ "<td class=\"date\">([^<]+)</td>"
+#	+ "</tr>$")
 g_splitReg = re.compile(
-	"^<tr>"
-	+ "<td class=\"link\"><a href=\"([^\"]+)\" title=\"[^\"]+\">[^</]+</a></td>"
-	+ "<td class=\"size\">([^<]+)</td>"
-	+ "<td class=\"date\">([^<]+)</td>"
-	+ "</tr>$")
+	"^"
+	+ "<a href=\"([^\"]+)\">[^</]+</a>"
+	+ " +([^ ]+) ([^ ]+) +"
+	+ "([^ ]+)"
+	+ "$")
 g_list_file = "files.lst"
 g_html_file = "index.html"
 g_loc_dir = './sources.yoctoproject/'
@@ -137,8 +143,8 @@ class csub_rep:
 				continue
 			if re.match("^git2_tmp.*", file_name):
 				continue
-			file_size = splitR.group(2)
-			file_time = time.strptime(splitR.group(3), "%Y-%b-%d %H:%M")
+			file_size = splitR.group(4)
+			file_time = time.strptime(splitR.group(2) + " " + splitR.group(3), "%d-%b-%Y %H:%M")
 
 			self._full_fl[file_name] = creg_file(self, file_name, file_size, file_time)
 	def __init__(self, base_url, loc_dir):
@@ -185,7 +191,6 @@ class csub_rep:
 				#print("mving " + i)
 				print("mv " + self._loc_dir + i + " " + g_deprecated_dir)
 				call("mv " + self._loc_dir + i + " " + g_deprecated_dir, shell=True)
-				#os.remove(self._loc_dir + i)
 
 		return
 	def gen_cb_list(self, par):
