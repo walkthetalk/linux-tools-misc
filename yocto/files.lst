@@ -627,7 +627,8 @@
 -Python-3.10.1.tar.xz
 -Python-3.10.2.tar.xz
 -Python-3.10.3.tar.xz
-+Python-3.10.4.tar.xz
+-Python-3.10.4.tar.xz
++Python-3.10.5.tar.xz
 +Python_WebDAV_Library-0.1.2.zip
 +RELEASE_2_3_0.tar.gz
 -Remmina-v1.3.6.tar.bz2
@@ -1026,7 +1027,8 @@
 -alsa-lib-1.2.5.1.tar.bz2
 -alsa-lib-1.2.5.tar.bz2
 -alsa-lib-1.2.6.1.tar.bz2
-+alsa-lib-1.2.7.tar.bz2
++alsa-lib-1.2.7.1.tar.bz2
+-alsa-lib-1.2.7.tar.bz2
 -alsa-oss-1.0.17.tar.bz2
 -alsa-oss-1.1.6.tar.bz2
 +alsa-oss-1.1.8.tar.bz2
@@ -1041,7 +1043,8 @@
 -alsa-plugins-1.2.1.tar.bz2
 -alsa-plugins-1.2.2.tar.bz2
 -alsa-plugins-1.2.5.tar.bz2
-+alsa-plugins-1.2.6.tar.bz2
+-alsa-plugins-1.2.6.tar.bz2
++alsa-plugins-1.2.7.1.tar.bz2
 -alsa-tools-1.0.24.1.tar.bz2
 -alsa-tools-1.0.25.tar.bz2
 -alsa-tools-1.0.26.1.tar.bz2
@@ -1069,7 +1072,8 @@
 -alsa-ucm-conf-1.2.5.tar.bz2
 -alsa-ucm-conf-1.2.6.2.tar.bz2
 -alsa-ucm-conf-1.2.6.3.tar.bz2
-+alsa-ucm-conf-1.2.7.tar.bz2
++alsa-ucm-conf-1.2.7.1.tar.bz2
+-alsa-ucm-conf-1.2.7.tar.bz2
 -alsa-utils-1.0.20.tar.bz2
 -alsa-utils-1.0.23.tar.bz2
 -alsa-utils-1.0.24.2.tar.bz2
@@ -1730,7 +1734,8 @@
 -bind-9.16.26.tar.xz
 -bind-9.18.1.tar.xz
 -bind-9.18.2.tar.xz
-+bind-9.18.3.tar.xz
+-bind-9.18.3.tar.xz
++bind-9.18.4.tar.xz
 +bind.tar.gz
 -binutils-2.20.1.tar.bz2
 -binutils-2.20.tar.bz2
@@ -3048,7 +3053,8 @@
 -diffoscope-211.tar.gz
 -diffoscope-212.tar.gz
 -diffoscope-214.tar.gz
-+diffoscope-215.tar.gz
+-diffoscope-215.tar.gz
++diffoscope-216.tar.gz
 -diffstat-1.54.tgz
 -diffstat-1.55.tgz
 -diffstat-1.57.tgz
@@ -3176,7 +3182,7 @@
 -doxygen-1.9.1.src.tar.gz
 -doxygen-1.9.2.src.tar.gz
 +doxygen-1.9.3.src.tar.gz
-+dpdk-1.6.0r2.tar.gz
+-dpdk-1.6.0r2.tar.gz
 -dpdk-1.7.0.tar.gz
 -dpdk-16.07.tar.gz
 -dpdk-16.11.tar.gz
@@ -3202,6 +3208,7 @@
 -dpkg_1.18.25.tar.xz
 -dpkg_1.19.4.tar.xz
 -dpkg_1.19.7.tar.xz
+-dpkg_1.19.8.tar.xz
 +dpkg_1.20.0.tar.xz
 +drbd-9.0.24-1.tar.gz
 -dri2proto-2.2.tar.bz2
@@ -3371,7 +3378,8 @@
 -ell-0.47.tar.xz
 -ell-0.48.tar.xz
 -ell-0.49.tar.xz
-+ell-0.50.tar.xz
+-ell-0.50.tar.xz
++ell-0.51.tar.xz
 -emacs-27.1.tar.xz
 +emacs-27.2.tar.xz
 +email_validator-1.1.3.tar.gz
@@ -3516,7 +3524,8 @@
 -ethtool-5.14.tar.gz
 -ethtool-5.15.tar.gz
 -ethtool-5.16.tar.gz
-+ethtool-5.17.tar.gz
+-ethtool-5.17.tar.gz
++ethtool-5.18.tar.gz
 -eudev-3.2.1.tar.gz
 -eudev-3.2.2.tar.gz
 -eudev-3.2.5.tar.gz
@@ -3537,6 +3546,7 @@
 +eventlet-0.33.1.tar.gz
 -evieext-1.1.0.tar.bz2
 +evieext-1.1.1.tar.bz2
++exceptiongroup-1.0.0rc8.tar.gz
 +execnet-1.9.0.tar.gz
 -exfat-utils-1.2.3.tar.gz
 +exfat-utils-1.3.0.tar.gz
@@ -5224,6 +5234,7 @@
 +git2_gitlab.com.procps-ng.procps.git.tar.gz
 +git2_gitlab.com.psmisc.psmisc.git.tar.gz
 -git2_gitlab.com.rilian-la-te.musl-locales.tar.gz
++git2_gitlab.com.rossburton.picobuild.git.tar.gz
 -git2_gitlab.com.ymorin.kconfig-frontends.git.tar.gz
 -git2_gitlab.freedesktop.org.NetworkManager.NetworkManager.git.tar.gz
 -git2_gitlab.freedesktop.org.drm.igt-gpu-tools.git.tar.gz
@@ -6072,9 +6083,12 @@
 -go1.18.1.linux-amd64.tar.gz
 -go1.18.1.linux-arm64.tar.gz
 -go1.18.1.src.tar.gz
-+go1.18.2.linux-amd64.tar.gz
-+go1.18.2.linux-arm64.tar.gz
-+go1.18.2.src.tar.gz
+-go1.18.2.linux-amd64.tar.gz
+-go1.18.2.linux-arm64.tar.gz
+-go1.18.2.src.tar.gz
++go1.18.3.linux-amd64.tar.gz
++go1.18.3.linux-arm64.tar.gz
++go1.18.3.src.tar.gz
 -go1.18.linux-amd64.tar.gz
 -go1.18.linux-arm64.tar.gz
 -go1.18.src.tar.gz
@@ -6914,6 +6928,7 @@
 -harfbuzz-4.2.0.tar.xz
 -harfbuzz-4.2.1.tar.xz
 +harfbuzz-4.3.0.tar.xz
++hatch_vcs-0.2.0.tar.gz
 +hatchling-1.3.0.tar.gz
 +haveged-1.9.2.tar.gz
 -haversine-2.2.0.tar.gz
@@ -7108,7 +7123,8 @@
 -hypothesis-6.46.4.tar.gz
 -hypothesis-6.46.7.tar.gz
 -hypothesis-6.46.9.tar.gz
-+hypothesis-6.46.11.tar.gz
+-hypothesis-6.46.11.tar.gz
++hypothesis-6.47.2.tar.gz
 -i2c-tools-3.1.0.tar.bz2
 -i2c-tools-3.1.1.tar.bz2
 -i2c-tools-3.1.2.tar.bz2
@@ -7675,7 +7691,8 @@
 -jsonschema-3.1.1.tar.gz
 -jsonschema-3.2.0.tar.gz
 -jsonschema-4.4.0.tar.gz
-+jsonschema-4.5.1.tar.gz
+-jsonschema-4.5.1.tar.gz
++jsonschema-4.6.0.tar.gz
 +jstyleson-0.0.2.tar.gz
 +juno-latest-oe-uboot.zip
 -kbd-1.15.2.tar.bz2
@@ -7687,7 +7704,8 @@
 -kbd-2.2.0.tar.xz
 -kbd-2.3.0.tar.xz
 -kbd-2.4.0.tar.xz
-+kbd-2.5.0.tar.xz
+-kbd-2.5.0.tar.xz
++kbd-2.5.1.tar.xz
 -kbproto-1.0.4.tar.bz2
 -kbproto-1.0.5.tar.bz2
 -kbproto-1.0.6.tar.bz2
@@ -7888,7 +7906,8 @@
 -libX11-1.7.3.1.tar.xz
 -libX11-1.7.3.tar.xz
 -libX11-1.7.5.tar.xz
-+libX11-1.8.tar.xz
++libX11-1.8.1.tar.xz
+-libX11-1.8.tar.xz
 -libXScrnSaver-1.2.0.tar.bz2
 -libXScrnSaver-1.2.1.tar.bz2
 -libXScrnSaver-1.2.2.tar.bz2
@@ -8318,7 +8337,8 @@
 -libdrm-2.4.107.tar.xz
 -libdrm-2.4.108.tar.xz
 -libdrm-2.4.109.tar.xz
-+libdrm-2.4.110.tar.xz
+-libdrm-2.4.110.tar.xz
++libdrm-2.4.111.tar.xz
 +libdrm-poulsbo_2.3.0-1ubuntu0sarvatt4~1004um1ubuntu1.tar.gz
 -libdvdread-5.0.3.tar.bz2
 -libdvdread-6.0.1.tar.bz2
@@ -8891,7 +8911,8 @@
 -libproxy-0.4.11.zip
 -libproxy-0.4.14.tar.xz
 +libproxy-0.4.15.tar.xz
-+libproxy-0.4.17.tar.xz
+-libproxy-0.4.17.tar.xz
++libproxy-0.4.18.tar.xz
 -libproxy_0.4.11.orig.tar.gz
 -libpsl-0.20.2.tar.gz
 -libpsl-0.21.0.tar.gz
@@ -8953,7 +8974,8 @@
 -librsvg-2.52.7.tar.xz
 -librsvg-2.54.0.tar.xz
 -librsvg-2.54.1.tar.xz
-+librsvg-2.54.3.tar.xz
+-librsvg-2.54.3.tar.xz
++librsvg-2.54.4.tar.xz
 -libsamplerate-0.1.2.tar.gz
 -libsamplerate-0.1.7.tar.gz
 -libsamplerate-0.1.8.tar.gz
@@ -9377,7 +9399,8 @@
 -lighttpd-1.4.60.tar.xz
 -lighttpd-1.4.61.tar.xz
 -lighttpd-1.4.63.tar.xz
-+lighttpd-1.4.64.tar.xz
+-lighttpd-1.4.64.tar.xz
++lighttpd-1.4.65.tar.xz
 +linecache2-1.0.0.tar.gz
 +links2.png
 -links-2.16.tar.bz2
@@ -9456,7 +9479,8 @@
 -linux-firmware-20220209.tar.xz
 -linux-firmware-20220310.tar.xz
 -linux-firmware-20220411.tar.xz
-+linux-firmware-20220509.tar.xz
+-linux-firmware-20220509.tar.xz
++linux-firmware-20220610.tar.xz
 -linuxconsoletools-1.7.0.tar.bz2
 +linuxconsoletools-1.7.1.tar.bz2
 -linuxdoc-tools_0.9.66.tar.gz
@@ -9606,7 +9630,8 @@
 -lttng-modules-2.13.0.tar.bz2
 -lttng-modules-2.13.1.tar.bz2
 -lttng-modules-2.13.2.tar.bz2
-+lttng-modules-2.13.3.tar.bz2
+-lttng-modules-2.13.3.tar.bz2
++lttng-modules-2.13.4.tar.bz2
 -lttng-tools-2.9.3.tar.bz2
 -lttng-tools-2.9.4.tar.bz2
 -lttng-tools-2.9.5.tar.bz2
@@ -10068,7 +10093,8 @@
 -mesa-22.0.2.tar.xz
 -mesa-22.0.3.tar.xz
 -mesa-22.1.0.tar.xz
-+mesa-22.1.1.tar.xz
+-mesa-22.1.1.tar.xz
++mesa-22.1.2.tar.xz
 -mesa-demos-8.0.1.tar.bz2
 -mesa-demos-8.1.0.tar.bz2
 -mesa-demos-8.2.0.tar.bz2
@@ -12375,7 +12401,8 @@
 -python-dbusmock-0.25.0.tar.gz
 -python-dbusmock-0.26.1.tar.gz
 -python-dbusmock-0.27.3.tar.gz
-+python-dbusmock-0.27.5.tar.gz
+-python-dbusmock-0.27.5.tar.gz
++python-dbusmock-0.28.0.tar.gz
 +python-decouple-3.6.tar.gz
 +python-distutils-extra-2.39.tar.gz
 -python-editor-1.0.3.tar.gz
@@ -12410,7 +12437,8 @@
 -python-magic-0.4.23.tar.gz
 -python-magic-0.4.24.tar.gz
 -python-magic-0.4.25.tar.gz
-+python-magic-0.4.26.tar.gz
+-python-magic-0.4.26.tar.gz
++python-magic-0.4.27.tar.gz
 -python-networkmanager-2.0.1.tar.gz
 -python-networkmanager-2.1.tar.gz
 +python-networkmanager-2.2.tar.gz
@@ -12793,7 +12821,8 @@
 -requests-2.25.0.tar.gz
 -requests-2.25.1.tar.gz
 -requests-2.26.0.tar.gz
-+requests-2.27.1.tar.gz
+-requests-2.27.1.tar.gz
++requests-2.28.0.tar.gz
 -requests-file-1.4.3.tar.gz
 +requests-file-1.5.1.tar.gz
 +requests-ftp-0.3.1.tar.gz
@@ -13057,7 +13086,8 @@
 -sbc-1.2.tar.xz
 -sbc-1.3.tar.xz
 -sbc-1.4.tar.xz
-+sbc-1.5.tar.xz
+-sbc-1.5.tar.xz
++sbc-2.0.tar.xz
 +sblim-cmpi-devel-2.0.3.tar.bz2
 +sblim-sfcCommon-1.0.1.tar.bz2
 +sblim-sfcc-2.2.8.tar.bz2
@@ -13257,7 +13287,8 @@
 -setuptools-62.1.0.tar.gz
 -setuptools-62.2.0.tar.gz
 -setuptools-62.3.1.tar.gz
-+setuptools-62.3.2.tar.gz
+-setuptools-62.3.2.tar.gz
++setuptools-62.5.0.tar.gz
 +setuptools-declarative-requirements-1.2.0.tar.gz
 -setuptools-rust-1.1.2.tar.gz
 +setuptools-rust-1.3.0.tar.gz
@@ -13601,7 +13632,8 @@
 -strace-5.14.tar.xz
 -strace-5.15.tar.xz
 -strace-5.16.tar.xz
-+strace-5.17.tar.xz
+-strace-5.17.tar.xz
++strace-5.18.tar.xz
 -stress-1.0.4.tar.gz
 -stress-ng-0.09.45.tar.xz
 -stress-ng-0.10.00.tar.xz
@@ -13742,7 +13774,9 @@
 -sudo-1.9.8p1.tar.gz
 -sudo-1.9.8p2.tar.gz
 -sudo-1.9.9.tar.gz
-+sudo-1.9.10.tar.gz
+-sudo-1.9.10.tar.gz
+-sudo-1.9.11.tar.gz
++sudo-1.9.11p2.tar.gz
 +sudoku-savant-1.3.tar.bz2
 -supervisor-4.0.2.tar.gz
 -supervisor-4.1.0.tar.gz
@@ -14071,6 +14105,7 @@
 -tmp9vrspui3
 -tmp717ckyd0
 -tmpckn7v_2f
+-tmpd1iovvsh
 -tmpey8ae2zg
 -tmpgwqdw6y1
 -tmph8sj8e_w
@@ -15036,7 +15071,8 @@
 -wireless-regdb-2021.07.14.tar.xz
 -wireless-regdb-2021.08.28.tar.xz
 -wireless-regdb-2022.02.18.tar.xz
-+wireless-regdb-2022.04.08.tar.xz
+-wireless-regdb-2022.04.08.tar.xz
++wireless-regdb-2022.06.06.tar.xz
 -wireless_tools.29.tar.gz
 +wireless_tools.30.pre9.tar.gz
 -wireshark-2.6.4.tar.xz
@@ -15145,7 +15181,8 @@
 -xcb-proto-1.13.tar.bz2
 -xcb-proto-1.14.1.tar.xz
 -xcb-proto-1.14.tar.xz
-+xcb-proto-1.15.tar.xz
++xcb-proto-1.15.2.tar.xz
+-xcb-proto-1.15.tar.xz
 -xcb-util-0.3.6.tar.bz2
 -xcb-util-0.3.8.tar.bz2
 -xcb-util-0.3.9.tar.bz2
