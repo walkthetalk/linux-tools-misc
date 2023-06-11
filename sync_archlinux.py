@@ -129,9 +129,10 @@ class csub_rep:
 				os.remove(self._loc_dir + i)
 
 if __name__ == '__main__':
-	repos = ["core",
+	repos = [
+        "core",
 		"extra",
-		"community",
+#		"community",
 		"multilib",
 #		"testing",
 #		"multilib-testing",
