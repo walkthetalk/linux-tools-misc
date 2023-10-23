@@ -3,6 +3,7 @@
 # NOTE: this script can be used to sync yocto repository which is accessed through
 #       http
 import tkinter
+from tkinter import ttk
 
 import operator
 import time
@@ -19,6 +20,168 @@ import threading
 from subprocess import call
 import fileinput
 import urllib.parse
+
+#g_re_ext = r"tar\.bz2|tar\.gz|tar\.xz|tgz|zip|gz|bz2"
+#g_re_ver = r"(?P<pkgver>(([0-9]+\.)+[0-9]+)|(([0-9]+_)+[0-9]+))"
+#g_re_cmm = r"-" + g_re_ver + r"\." + g_re_ext
+#g_re_cmm2 = r"_" + g_re_ver + r"\." + g_re_ext
+#g_re_cmm3 = r"_" + g_re_ver + r"\.orig\." + g_re_ext
+#g_re_cmm4 = g_re_ver + r"\." + g_re_ext
+#g_re_nover = ""
+#g_re_withp = r"-" + g_re_ver + "p" + r"(?P<pkgp>[0-9]+)" + r"\." + g_re_ext
+#g_re_withaz = g_re_ver + r"(?P<pkgaz>[a-zA-Z])" + r"\." + g_re_ext
+#
+#class pkg_info:
+#	def __init__(self, pn, vre = g_re_cmm, vreWithName = False):
+#		self._pn = pn
+#		if re.match(g_re_cmm, r"^git2_.*"):
+#			self._re = g_re_cmm
+#		else:
+#			if vreWithName:
+#				self._re = vre
+#			else:
+#				self._re = pn + vre
+#	def pn(self):
+#		return self._pn
+#	def vre(self):
+#		return self._re
+#
+#g_pkg_list = {
+#	pkg_info("acl"), #-2.3.1.tar.gz"
+#	pkg_info("attr"), #-2.5.1.tar.gz"
+#	pkg_info("autoconf"), #-2.71.tar.gz"
+#	pkg_info("autoconf-archive"), #-2022.09.03.tar.xz"
+#	pkg_info("automake"), #-1.16.5.tar.gz"
+#	pkg_info("base-passwd", g_re_cmm2), #_3.6.1.tar.xz"
+#	pkg_info("bash"), #-5.2.9.tar.gz"
+#	pkg_info("bash-completion"), #-2.11.tar.xz"
+#	pkg_info("bc"), #-1.07.1.tar.gz"
+#	pkg_info("bison"), #-3.8.2.tar.xz"
+#	pkg_info("bluez"), #-5.65.tar.xz"
+#	pkg_info("boost", g_re_cmm2), #_1_80_0.tar.bz2"
+#	pkg_info("busybox"), #-1.35.0.tar.bz2"
+#	pkg_info("bzip2"), #-1.0.8.tar.gz"
+#	pkg_info("cairo"), #-1.16.0.tar.xz"
+#	pkg_info("check"), #-0.15.2.tar.gz"
+#	pkg_info("cmake"), #-3.24.2.tar.gz"
+#	pkg_info("coreutils"), #-9.1.tar.xz"
+#	pkg_info("cpio"), #-2.13.tar.gz"
+#	pkg_info("curl"), #-7.86.0.tar.xz"
+#	pkg_info("dbus"), #-1.14.4.tar.xz"
+#	pkg_info("dbus-python"), #-1.3.2.tar.gz"
+#	pkg_info("docbook-xml", g_re_cmm3), #_4.5.orig.tar.gz"
+#	pkg_info("docbook-xsl"), #-1.79.1.tar.bz2"
+#	pkg_info("dosfstools"), #-4.2.tar.gz"
+#	pkg_info("dropbear"), #-2022.82.tar.bz2"
+#	pkg_info("elfutils"), #-0.188.tar.bz2"
+#	pkg_info("expat"), #-2.5.0.tar.bz2"
+#	pkg_info("flex"), #-2.6.4.tar.gz"
+#	pkg_info("flit"), #-3.8.0.tar.gz"
+#	pkg_info("fmt"), #-9.1.0.zip"
+#	pkg_info("fontconfig"), #-2.14.1.tar.gz"
+#	pkg_info("freetype"), #-2.12.1.tar.xz"
+#	pkg_info("gawk"), #-5.1.1.tar.gz"
+#	pkg_info("gcc"), #-12.2.0.tar.xz"
+#	pkg_info("gdbm"), #-1.23.tar.gz"
+#	pkg_info("gettext"), #-0.21.1.tar.gz"
+#	pkg_info("glib"), #-2.74.1.tar.xz"
+#	pkg_info("gmp"), #-6.2.1.tar.bz2"
+#	pkg_info("gnutls"), #-3.7.8.tar.xz"
+#	pkg_info("gobject-introspection"), #-1.72.0.tar.xz"
+#	pkg_info("gperf"), #-3.1.tar.gz"
+#	pkg_info("gpgme"), #-1.18.0.tar.bz2"
+#	pkg_info("gsl"), #-2.7.1.tar.gz"
+#	pkg_info("gtk-doc"), #-1.33.2.tar.xz"
+#	pkg_info("harfbuzz"), #-5.3.1.tar.xz"
+#	pkg_info("i2c-tools"), #-4.3.tar.gz"
+#	pkg_info("icu4c-data", "icu4c-" + g_re_ver + r"-data\." + g_re_ext, True),##########################
+#	pkg_info("icu4c-src", "icu4c-" + g_re_ver + r"-src\." + g_re_ext, True),##########################
+#	pkg_info("iniparse"), #-0.5.tar.gz"
+#	pkg_info("installer"), #-0.5.1.tar.gz"
+#	pkg_info("intltool"), #-0.51.0.tar.gz"
+#	pkg_info("itstool"), #-2.0.7.tar.bz2"
+#	pkg_info("Jinja2"), #-3.1.2.tar.gz"
+#	pkg_info("json-c"), #-0.16.tar.gz"
+#	pkg_info("kbd"), #-2.5.1.tar.xz"
+#	pkg_info("libarchive"), #-3.6.1.tar.gz"
+#	pkg_info("libassuan"), #-2.5.5.tar.bz2"
+#	pkg_info("libcap"), #-2.66.tar.xz"
+#	pkg_info("libcap-ng"), #-0.8.3.tar.gz"
+#	pkg_info("libevdev"), #-1.13.0.tar.xz"
+#	pkg_info("libffi"), #-3.4.4.tar.gz"
+#	pkg_info("libgcrypt"), #-1.10.1.tar.bz2"
+#	pkg_info("libgpg-error"), #-1.46.tar.bz2"
+#	pkg_info("libical"), #-3.0.16.tar.gz"
+#	pkg_info("libidn2"), #-2.3.4.tar.gz"
+#	pkg_info("libjpeg-turbo"), #-2.1.4.tar.gz"
+#	pkg_info("libpng"), #-1.6.38.tar.xz"
+#	pkg_info("libtirpc"), #-1.3.3.tar.bz2"
+#	pkg_info("libtool"), #-2.4.7.tar.gz"
+#	pkg_info("libunistring"), #-1.1.tar.gz"
+#	pkg_info("libwebp"), #-1.2.4.tar.gz"
+#	pkg_info("libX11"), #-1.6.8.tar.bz2"
+#	pkg_info("libxkbcommon"), #-1.4.1.tar.xz"
+#	pkg_info("libxml2"), #-2.9.14.tar.xz"
+#	pkg_info("libxslt"), #-1.1.37.tar.xz"
+#	pkg_info("linux"), #-5.15.53.tar.xz"
+#	pkg_info("lrzsz"), #-0.12.20.tar.gz"
+#	pkg_info("lua"), #-5.4.4.tar.gz"
+#	pkg_info("lzo"), #-2.10.tar.gz"
+#	pkg_info("m4"), #-1.4.19.tar.gz"
+#	pkg_info("make"), #-4.4.tar.gz"
+#	pkg_info("MarkupSafe"), #-2.1.1.tar.gz"
+#	pkg_info("meson"), #-0.64.0.tar.gz"
+#	pkg_info("minicom", g_re_cmm3), #_2.8.orig.tar.bz2"
+#	pkg_info("mpc"), #-1.2.1.tar.gz"
+#	pkg_info("mpfr"), #-4.1.0.tar.xz"
+#	pkg_info("mtdev"), #-1.1.6.tar.bz2"
+#	pkg_info("netbase", g_re_cmm2), #_6.4.tar.xz
+#	pkg_info("nettle"), #-3.8.1.tar.gz"
+#	pkg_info("openssh", g_re_withp), #-9.1p1.tar.gz"##################################
+#	pkg_info("openssl"), #-3.0.7.tar.gz"
+#	pkg_info("opkg"), #-0.6.0.tar.gz"
+#	pkg_info("patch"), #-2.7.6.tar.gz"
+#	pkg_info("pcre2"), #-10.40.tar.bz2"
+#	pkg_info("perl"), #-5.36.0.tar.gz"
+#	pkg_info("perl-cross"), #-1.4.tar.gz"
+#	pkg_info("pigz"), #-2.7.tar.gz"
+#	pkg_info("pixman"), #-0.42.2.tar.gz"
+#	pkg_info("popt"), #-1.19.tar.gz"
+#	pkg_info("postgresql"), #-14.5.tar.bz2"
+#	pkg_info("pseudo-prebuilt"), #-2.33.tar.xz"
+#	pkg_info("pygobject"), #-3.42.2.tar.xz"
+#	pkg_info("Python"), #-3.11.0.tar.xz"
+#	pkg_info("qemu"), #-7.1.0.tar.xz"
+#	pkg_info("quilt"), #-0.67.tar.gz"
+#	pkg_info("re2c"), #-3.0.tar.xz"
+#	pkg_info("readline"), #-8.2.tar.gz"
+#	pkg_info("rsync"), #-3.2.7.tar.gz"
+#	pkg_info("setuptools"), #-65.5.1.tar.gz"
+#	pkg_info("shadow"), #-4.13.tar.gz"
+#	pkg_info("six"), #-1.16.0.tar.gz"
+#	pkg_info("SourceHanSansCN.zip", g_re_nover)#######################################
+#	pkg_info("sqlite-autoconf"), #-3390400.tar.gz"
+#	pkg_info("strace"), #-6.0.tar.xz"
+#	pkg_info("sudo", g_re_withp), #-1.9.12p1.tar.gz"####################################
+#	pkg_info("swig"), #-4.1.0.tar.gz"
+#	pkg_info("sysfsutils"), #-2.1.0.tar.gz"
+#	pkg_info("tar"), #-1.34.tar.bz2"
+#	pkg_info("tzcode", g_re_withaz), #2022d.tar.gz"#################################
+#	pkg_info("tzdata", g_re_withaz), #2022d.tar.gz"################################
+#	pkg_info("unifdef"), #-2.12.tar.xz"
+#	pkg_info("unzip", g_re_cmm4), #60.tar.gz"
+#	pkg_info("util-linux"), #-2.38.1.tar.xz"
+#	pkg_info("util-macros"), #-1.19.3.tar.gz"
+#	pkg_info("vala"), #-0.56.3.tar.xz"
+#	pkg_info("wheel"), #-0.38.4.tar.gz"
+#	pkg_info("xkeyboard-config"), #-2.37.tar.xz"
+#	pkg_info("xlslib", #-package-2.5.0.zip"#################################
+#	pkg_info("XML-Parser"), #-2.46.tar.gz"
+#	pkg_info("xmlts", g_re_cmm4), #20080827.tar.gz"
+#	pkg_info("xz"), #-5.2.7.tar.gz"
+#	pkg_info("yaml"), #-0.2.5.tar.gz"
+#	pkg_info("zlib"), #-1.2.13.tar.gz"
+#}
 
 #g_splitReg = re.compile(
 #	"^<tr>"
@@ -83,6 +246,59 @@ def natural_sorted(iterable, key=None, reverse=False):
 
     return sorted(iterable, key=alphanum_key, reverse=reverse)
 
+def cmp_ver(s0, s1):
+	if s0 == s1:
+		return 0
+	print("cmp ver: " + s0 + ", " + s1)
+	ver0 = re.split('[\._]', s0)
+	ver1 = re.split('[\._]', s1)
+	for i,j in zip(ver0, ver1):
+		print("i: " + i + ", j: " + j)
+		if i == "":
+			if j == "":
+				continue
+			else:
+				return -1
+		else:
+			if j == "":
+				return 1
+			#else: compare it
+		v0 = int(i)
+		v1 = int(j)
+		if v0 == v1:
+			continue
+		if v0 < v1:
+			return -1
+		if v0 > v1:
+			return 1
+	if len(ver0) > len(ver1):
+		return 1
+	if len(ver0) < len(ver1):
+		return -1
+	return 0
+def stage_to_n(s):
+	if len(s) == 1:
+		return ord(s)
+	switch={
+		"alpha": 100,
+		"beta": 101,
+		"rc": 102,
+		"pre": 103,
+		"p": 104,
+		"P": 105,
+		}
+	return switch.get(s, -1)
+def cmp_stage(s0, s1):
+	if s0 == s1:
+		return 0
+	v0 = stage_to_n(s0)
+	v1 = stage_to_n(s1)
+	if v0 < v1:
+		return -1
+	if v0 > v1:
+		return 1
+	return 0
+
 class creg_file:
 	def __init__(self, parent, fname, fsize, ftime):
 		self._parent = parent
@@ -91,6 +307,43 @@ class creg_file:
 		self._time = ftime
 		self._need = False
 		self._need_dl = False
+
+		self._pkgname = ""
+		self._pkgver = ""
+		self._pkgstage = ""
+		self._pkgstagever = ""
+		self._pkgrevision = ""
+		m = re.match(r"^(?P<pkgname>.*)"
+				"(-|_|-s|\.v)"
+				"(?P<pkgver>(([0-9]+\.)+[0-9]+)|(([0-9]+_)+[0-9]+))"
+				"(?P<pkgstage>-P[0-9]+|p[0-9]+|[a-z]|alpha|-?beta[0-9]*|-?rc[0-9]+|-pre[0-9]+)?"
+				"(-(?P<pkgrevision>[0-9]+))?"
+				"\."
+				"(?P<ext>tar\.bz2|tar\.gz|tar\.xz|tgz|zip|gz|bz2|crate)"
+				"$", fname)
+		if m:
+			self._pkgname = m.group("pkgname")
+			self._pkgver = m.group("pkgver")
+
+			if m.group("pkgstage"):
+				#print("pkgstage: " + m.group("pkgstage"))
+				mm = re.match(r"^-?"
+					"(?P<prefix>[a-zA-Z]*)"
+					"(?P<version>[0-9]*)", m.group("pkgstage"))
+				if mm:
+					if mm.group("prefix"):
+						self._pkgstage = mm.group("prefix")
+					if mm.group("version"):
+						self._pkgstagever = mm.group("version")
+				else:
+					assert(0)
+			if m.group("pkgrevision"):
+				self._pkgrevision = m.group("pkgrevision")
+		if m:
+			self._cant_parse = False
+		else:
+			self._cant_parse = True
+
 	def set_need(self, isNeed):
 		self._need = isNeed
 		self._need_dl = self.__need_dl()
@@ -98,6 +351,8 @@ class creg_file:
 		return self._need
 	def get_need_dl(self):
 		return self._need_dl
+	def is_cant_parse(self):
+		return self._cant_parse
 
 	def __need_dl(self):
 		if not self.get_need():
@@ -126,7 +381,40 @@ class creg_file:
 
 	def name(self):
 		return self._name
-
+	def pkgname(self):
+		if (self._pkgname == ""):
+			return self._name
+		return self._pkgname
+	def cmpWith(self, other):
+		assert(self.pkgname() == other.pkgname())
+		assert(self._pkgver != "")
+		#print("cmp: " + self._name)
+		#print("cmp pkg ver")
+		cmpr = cmp_ver(self._pkgver, other._pkgver)
+		if cmpr != 0:
+			return cmpr
+		#print("cmp pkg stage")
+		cmpr = cmp_stage(self._pkgstage, other._pkgstage)
+		if cmpr != 0:
+			return cmpr
+		#print("cmp pkg stagever")
+		cmpr = cmp_ver(self._pkgstagever, other._pkgstagever)
+		if cmpr != 0:
+			return cmpr
+		#print("cmp pkg rev")
+		cmpr = cmp_ver(self._pkgrevision, other._pkgrevision)
+		if cmpr != 0:
+			return cmpr
+		#print(self.name() + ", " + self._pkgver + "," + self._pkgstage)
+		#print(other.name() + ", " + other._pkgver + "," + other._pkgstage)
+		#print("can't parse:")
+		#print("\t" + self.name())
+		#print("\t" + other.name())
+		other.set_cant_parse()
+		self.set_cant_parse()
+		return 0
+	def set_cant_parse(self):
+		self._cant_parse = True
 class csub_rep:
 	def __genlist(self):
 		fp = open(g_html_file)
@@ -142,6 +430,9 @@ class csub_rep:
 			if re.match(".*bad-checksum.*", file_name):
 				continue
 			if re.match("^git2_tmp.*", file_name):
+				continue
+			# use git repo
+			if re.match("^git2_.*", file_name):
 				continue
 			file_size = splitR.group(2)
 			file_time = time.strptime(splitR.group(3) + " " + splitR.group(4), "%Y-%b-%d %H:%M")
@@ -203,14 +494,72 @@ class csub_rep:
 						last_settings[m.group(2)] = True
 					elif m.group(1) == "-":
 						last_settings[m.group(2)] = False
-
+		# generate package list (newest list need)
+		_tmp = {}
+		for i in self._full_fl:
+			vv = self._full_fl[i]
+			pn = vv.pkgname()
+			# old delete files
+			if (i in last_settings) and (not last_settings[i]):
+				continue
+			# old download or new
+			if pn in _tmp:
+				if vv.cmpWith(_tmp[pn]) > 0:
+					#print("\tnew version: " + vv.name())
+					_tmp[pn] = vv
+			else:
+				#print("new package: " + vv.pkgname())
+				_tmp[pn] = vv
+		# add in gui list
 		for (k, v) in natural_sorted(self._full_fl.items()):
-			if (k in last_settings):# old file
-				if last_settings[k]:
-					par.insert(tkinter.END, k)
+			# old delete files
+			if (k in last_settings) and (not last_settings[k]):
+				continue
+
+			# need dlownload?
+			_dl = False
+			if v.pkgname() in _tmp:
+				if _tmp[v.pkgname()] == v:
+					_dl = True
+
+			# insert and set select
+			par.insert(tkinter.END, k)
+			if _dl:
 					par.selection_set(tkinter.END)
-			else:#new file
-				par.insert(tkinter.END, k)
+
+			# set decoration
+			if (k in last_settings):
+				par.itemconfig(tkinter.END, fg="black", selectforeground="black")
+				par.itemconfig(tkinter.END, selectbackground="grey75")
+				#if last_settings[k]:# old download
+					#if _dl:# keep
+					#else:# drop
+				#else:
+				#	assert(0)
+			else:# new files
+				par.itemconfig(tkinter.END, fg="purple4", selectforeground="purple4")
+				par.itemconfig(tkinter.END, selectbackground="SlateBlue1")
+				#if _dl:# new download
+				#else:# new drop
+
+			if v.is_cant_parse():
+				par.itemconfig(tkinter.END, fg="red", selectforeground="red")
+
+			#if (k in last_settings):# old file
+			#	if last_settings[k]:# old selected
+			#		par.insert(tkinter.END, k)
+			#		if v.pkgname() in _tmp:
+			#			if _tmp[v.pkgname()] == v:
+			#				par.selection_set(tkinter.END)
+			#else:#new file
+			#	par.insert(tkinter.END, k)
+			#	par.itemconfig(tkinter.END, selectbackground="blue")
+			#	if v.is_cant_parse():
+			#		par.itemconfig(tkinter.END,{'fg': "red"})
+			#	else:
+			#		if v.pkgname() in _tmp:
+			#			if _tmp[v.pkgname()] == v:
+			#				par.selection_set(tkinter.END)
 	def process_need_list(self, par):
 		for i in par.curselection():
 			self._full_fl[par.get(i)].set_need(True)
@@ -228,14 +577,21 @@ class csub_rep:
 
 if __name__ == '__main__':
 	base_url = 'http://downloads.yoctoproject.org/mirror/sources/'
-	call("wget --progress=bar -O " + g_html_file + " " + base_url, shell=True)
+	#call("wget --progress=bar -O " + g_html_file + " " + base_url, shell=True)
 	test = csub_rep(base_url, g_loc_dir)
 
 	# edit
 	win = tkinter.Tk()
 	listbox = tkinter.Listbox(win, selectmode="multiple", height=40,width=100)
 	test.gen_cb_list(listbox)
-	listbox.pack()
+	listbox.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=True)
+	#listbox.configure(font=('Aerial 13'))
+	#scrollbar = ttk.Scrollbar(win, orient='vertical', command=listbox.yview)
+	#scrollbar.grid(row=0, column=1, sticky=tkinter.NS)
+	scrollbar = tkinter.Scrollbar(win)
+	scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+	listbox.config(yscrollcommand=scrollbar.set)
+	scrollbar.config(command=listbox.yview)
 	win.protocol("WM_DELETE_WINDOW", lambda : (
 		      test.process_need_list(listbox),
 		      win.destroy()
