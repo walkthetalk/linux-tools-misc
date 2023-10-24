@@ -249,11 +249,11 @@ def natural_sorted(iterable, key=None, reverse=False):
 def cmp_ver(s0, s1):
 	if s0 == s1:
 		return 0
-	print("cmp ver: " + s0 + ", " + s1)
+	#print("cmp ver: " + s0 + ", " + s1)
 	ver0 = re.split('[\._]', s0)
 	ver1 = re.split('[\._]', s1)
 	for i,j in zip(ver0, ver1):
-		print("i: " + i + ", j: " + j)
+		#print("i: " + i + ", j: " + j)
 		if i == "":
 			if j == "":
 				continue
@@ -488,19 +488,18 @@ class csub_rep:
 		last_settings = {}
 		with fileinput.input(files=(g_list_file)) as f:
 			for line in f:
-				m = re.match("([+-])(.*)", line)
+				m = re.match("([+-^])(.*)", line)
 				if m:
-					if m.group(1) == "+":
-						last_settings[m.group(2)] = True
-					elif m.group(1) == "-":
-						last_settings[m.group(2)] = False
+					if m.group(1) == "^":
+						print(line)
+					last_settings[m.group(2)] = m.group(1)
 		# generate package list (newest list need)
 		_tmp = {}
 		for i in self._full_fl:
 			vv = self._full_fl[i]
 			pn = vv.pkgname()
 			# old delete files
-			if (i in last_settings) and (not last_settings[i]):
+			if (i in last_settings) and (last_settings[i] == "-"):
 				continue
 			# old download or new
 			if pn in _tmp:
@@ -513,12 +512,14 @@ class csub_rep:
 		# add in gui list
 		for (k, v) in natural_sorted(self._full_fl.items()):
 			# old delete files
-			if (k in last_settings) and (not last_settings[k]):
+			if (k in last_settings) and (last_settings[k] == "-"):
 				continue
 
 			# need dlownload?
 			_dl = False
-			if v.pkgname() in _tmp:
+			if last_settings[k] == "^":
+				_dl = True
+			elif v.pkgname() in _tmp:
 				if _tmp[v.pkgname()] == v:
 					_dl = True
 
