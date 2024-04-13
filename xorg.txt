@@ -1,0 +1,2 @@
+https://us.download.nvidia.cn/XFree86/Linux-x86_64/450.57/README/randr14.html
+

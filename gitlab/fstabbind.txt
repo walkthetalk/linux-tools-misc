@@ -1,6 +1,0 @@
-/mnt/datum/gitlab/backups	/var/lib/gitlab/backups		none defaults,bind 0 0
-/mnt/datum/gitlab/builds	/var/lib/gitlab/builds		none defaults,bind 0 0
-/mnt/datum/gitlab/repositories	/var/lib/gitlab/repositories	none defaults,bind 0 0
-/mnt/datum/gitlab/satellites	/var/lib/gitlab/satellites	none defaults,bind 0 0
-/mnt/datum/gitlab/shared	/var/lib/gitlab/shared		none defaults,bind 0 0
-/mnt/datum/gitlab/uploads	/var/lib/gitlab/uploads		none defaults,bind 0 0

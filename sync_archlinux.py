@@ -14,11 +14,11 @@ from bs4 import BeautifulSoup
 from subprocess import call
 import fileinput
 
-g_host = "mirrors.tuna.tsinghua.edu.cn"
+#g_host = "mirrors.aliyun.com"
 #g_host = "mirrors.163.com"
 #g_host = "mirror.bjtu.edu.cn"
-#g_host = "mirrors.neusoft.edu.cn"
-g_loc_base_dir = "/mnt/d/sw/archlinux/"
+g_host = "mirrors.neusoft.edu.cn"
+g_loc_base_dir = "./repo"
 
 class csub_rep:
 	def __init__(self, repo_name, main_page, loc_dir):

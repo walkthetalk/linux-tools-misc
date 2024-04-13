@@ -1,2 +1,0 @@
-in cmd:
-	bcdedit /set {bootmgr} path \EFI\grub\grubx64.efi

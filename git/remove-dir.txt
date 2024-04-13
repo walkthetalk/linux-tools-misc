@@ -1,1 +1,0 @@
-git filter-branch --tree-filter 'rm -rf include/zmsg/*' HEAD
